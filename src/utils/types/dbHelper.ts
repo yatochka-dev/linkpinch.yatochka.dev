@@ -1,0 +1,3 @@
+interface LinkSettings {
+    active: boolean;
+}
