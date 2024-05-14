@@ -11,7 +11,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import BarChartIcon from '@mui/icons-material/BarChart';
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday';
 import copyToClipboard from "@/utils/helpers/copyToClipboard";
-import { toast } from 'react-hot-toast';
+import {toast} from 'react-hot-toast';
 
 interface ShortenedURLProps {
     data: ShortenedURL & {
@@ -53,12 +53,13 @@ export default function Dashboard_ShortenedURL(
                 flexDirection: 'column',
                 gap: 1.5
             }}>
-                <Typography  variant={'h6'} sx={{
+                <Typography variant={'h6'} sx={{
                     mt: -1
                 }}>
                     {data.webPageTitle ?? "Some random title until I manage to fetch page's titles"}
                 </Typography>
-                <Typography color={'info.main'} component={Link} href={getFullShortenedURL(data, true)} target={"_blank"} sx={{
+                <Typography color={'info.main'} component={Link} href={getFullShortenedURL(data, true)}
+                            target={"_blank"} sx={{
                     "&:hover": {
                         textDecoration: "underline"
                     }
@@ -68,14 +69,28 @@ export default function Dashboard_ShortenedURL(
                 <Typography color={'text.secondary'} component={Link} href={data.originalURL} target={"_blank"} sx={{
                     "&:hover": {
                         textDecoration: "underline"
-                    }
+                    },
+                    display: 'flex',
+
                 }}>
-                    {data.originalURL}
+                    <Box component={'span'} sx={{
+                        display: 'inline-block',
+                        textOverflow: 'ellipsis',
+                        wordBreak: 'break-all',
+                        maxHeight: "1.5em",
+                        overflow: 'hidden',
+                        "-webkit-line-clamp": "1",
+                        "-webkit-box-orient": "vertical",
+                    }}>{data.originalURL}</Box>
+                    <Box component={'span'} sx={{
+                        display: 'inline-block',
+                        transform: 'translateX(-0.29em)',
+                    }}>{data.originalURL.length > 50 ? "..." : ""}</Box>
                 </Typography>
 
                 <Box sx={{
                     display: 'flex',
-                //  position at the bottom
+                    //  position at the bottom
                     mt: 2,
                     gap: 2
 
@@ -86,18 +101,18 @@ export default function Dashboard_ShortenedURL(
                         <Box sx={{
                             cursor: "help"
                         }}>
-                        <Typography variant={'caption'} sx={{
-                            display: 'flex',
+                            <Typography variant={'caption'} sx={{
+                                display: 'flex',
 
-                            alignItems: 'center'
-                        }}>
-                            <BarChartIcon fontSize={"small"}/>
-                            <Box sx={{
-                                mt: .7,
-                                ml: .5
-                            }}>{data._count.clicks} engagements</Box>
-                        </Typography>
-                    </Box>
+                                alignItems: 'center'
+                            }}>
+                                <BarChartIcon fontSize={"small"}/>
+                                <Box sx={{
+                                    mt: .7,
+                                    ml: .5
+                                }}>{data._count.clicks} engagements</Box>
+                            </Typography>
+                        </Box>
                     </Tooltip>
                     <Box>
                         <Typography variant={'caption'} sx={{
@@ -114,14 +129,21 @@ export default function Dashboard_ShortenedURL(
                     </Box>
                 </Box>
             </Box>
-            <Box flexGrow={1} />
-            <Box  sx={{
+            <Box flexGrow={1}/>
+            <Box sx={{
                 mt: -2,
+                display: 'flex',
+                flexDirection: 'row',
+                gap: 2,
+                alignItems: 'flex-start'
             }}>
-                <Button startIcon={<ContentCopyIcon/>} size={'small'} variant={"outlined"} onClick={handleCopy}>Copy</Button>
+                <Button startIcon={<ContentCopyIcon/>} size={'small'} variant={"outlined"} onClick={handleCopy}>
+                    <Box component={'span'} sx={{
+                        mt: .2
+                    }}>Copy</Box>
+                </Button>
                 <Button size={'small'} variant={"text"} sx={{
                     minWidth: 32,
-                    ml: 2
                 }}>
                     <EditIcon/>
                 </Button>

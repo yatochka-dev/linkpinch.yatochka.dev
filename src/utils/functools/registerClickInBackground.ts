@@ -1,7 +1,8 @@
 import {type ShortenedURL} from "@prisma/client";
+import {env} from "@/env";
 
 export default async function registerClickInBackground(item: ShortenedURL): Promise<boolean> {
-    const url = new URL(`http://127.0.0.1:8000/register-click/${encodeURIComponent(item.id)}`)
+    const url = new URL(`${env.BACKGROUND_API_URL}register-click/${encodeURIComponent(item.id)}`)
 
 
     const resp = await fetch(url, {

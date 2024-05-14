@@ -6,6 +6,7 @@ import FormDisablingTextField from "@/components/ui/FormDisablingTextField";
 import debounce from "@/utils/helpers/debounce";
 import {useFormState} from "react-dom";
 import Action_ShortenUrl from "@/server/actions/shortenUrl";
+import {env} from "@/env";
 
 export default function CreateShortenedURLForm() {
 
@@ -115,7 +116,7 @@ export default function CreateShortenedURLForm() {
                         }}
                         InputProps={{
                             startAdornment: <InputAdornment position="start">
-                                http://localhost:3000/d/
+                                {env.NEXT_PUBLIC_BASE_URL+"/"}
                             </InputAdornment>,
                         }}
                     />

@@ -24,6 +24,8 @@ export const env = createEnv({
         ),
         DISCORD_CLIENT_ID: z.string(),
         DISCORD_CLIENT_SECRET: z.string(),
+        BACKGROUND_API_URL: z.string().url(),
+
 
     },
 
@@ -49,7 +51,7 @@ export const env = createEnv({
         NEXTAUTH_URL: process.env.NEXTAUTH_URL,
         DISCORD_CLIENT_ID: process.env.DISCORD_CLIENT_ID,
         DISCORD_CLIENT_SECRET: process.env.DISCORD_CLIENT_SECRET,
-
+        BACKGROUND_API_URL: process.env.BACKGROUND_API_URL,
         NEXT_PUBLIC_BASE_URL: process.env.NEXT_PUBLIC_BASE_URL,
     },
     /**

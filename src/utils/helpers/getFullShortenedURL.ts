@@ -7,5 +7,5 @@ export default function getFullShortenedURL(item: ShortenedURL, http = false): s
 
     const domain = !http ? url.host : url.origin;
 
-    return `${domain}/d/${item.path}`;
+    return `${domain}/${item.path}`;
 }

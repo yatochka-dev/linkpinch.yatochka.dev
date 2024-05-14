@@ -18,10 +18,11 @@ export default async function DashboardPage() {
             }
         },
         orderBy: {
-            clicks: {
-                _count: "desc"
-
-            }
+            // clicks: {
+            //     _count: "desc"
+            //
+            // }
+            createdAt: "desc"
         }
     })
 
