@@ -9,6 +9,7 @@ export default function debounce<T extends unknown[]>(
       clearTimeout(timeoutId);
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     timeoutId = setTimeout(async () => {
       try {
         await fn(...args);
