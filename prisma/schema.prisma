@@ -66,8 +66,9 @@ model ShortenedURL {
   originalURL String
   path        String @unique @default(uuid())
 
-  clicks   Click[]
-  settings Json    @default("{}")
+  webPageTitle String?
+  clicks       Click[]
+  settings     Json    @default("{}")
 
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt

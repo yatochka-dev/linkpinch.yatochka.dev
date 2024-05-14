@@ -1,6 +1,7 @@
 import "@/styles/globals.css";
 import {AppRouterCacheProvider} from '@mui/material-nextjs/v13-appRouter';
 import {Poppins} from 'next/font/google'
+import { Toaster } from "react-hot-toast";
 
 import {ThemeProvider} from '@mui/material/styles';
 import theme from '../theme';
@@ -40,6 +41,9 @@ export default async function RootLayout({
                 <CssBaseline/>
                 <html lang="en">
                 <Box component="body" className={font.className} style={font.style}>
+                            <Toaster position={"bottom-right"} toastOptions={{
+                            }}/>
+
                     <Nav session={session}/>
                     <Box sx={{
                         pl: "calc(220px)"

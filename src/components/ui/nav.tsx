@@ -70,7 +70,6 @@ export default function Nav({
 }) {
     const width = useResponsive({}, "220px")
 
-    console.log(session)
 
     const loggedIn = !!session?.user;
     return (
@@ -104,11 +103,11 @@ export default function Nav({
                     Dashboard
                 </NavLink>}
                 <Box flexGrow={.5}/>
-                <Typography sx={{
+                {!loggedIn && <Typography sx={{
                     px: 2,
                 }}>
                     Log In to access more features
-                </Typography>
+                </Typography>}
                 <Box flexGrow={1}/>
                 {!loggedIn && <NavLink href={"/login"}>
                     Login
