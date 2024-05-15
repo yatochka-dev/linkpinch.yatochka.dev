@@ -1,6 +1,6 @@
 export default function debounce<T extends unknown[]>(
   fn: (...args: T) => Promise<void>, // Now accepts async functions
-  delay: number
+  delay: number,
 ): (...args: T) => void {
   let timeoutId: ReturnType<typeof setTimeout> | null = null;
 
@@ -15,7 +15,7 @@ export default function debounce<T extends unknown[]>(
         await fn(...args);
       } catch (error) {
         // Add your desired error handling logic here
-        console.error('Error in debounced function:', error);
+        console.error("Error in debounced function:", error);
       } finally {
         timeoutId = null; // Clear timeoutId after completion/error
       }

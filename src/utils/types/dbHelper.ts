@@ -1,3 +1,3 @@
 interface LinkSettings {
-    active: boolean;
+  active: boolean;
 }
