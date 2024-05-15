@@ -1,16 +1,16 @@
-import React from "react";
+import React from 'react'
 
 export default function DashboardLayout({
-  children,
-  modal,
+    children,
+    modal,
 }: {
-  children: React.ReactNode;
-  modal: React.ReactNode;
+    children: React.ReactNode
+    modal: React.ReactNode
 }) {
-  return (
-    <>
-      {children}
-      {modal}
-    </>
-  );
+    return (
+        <>
+            {children}
+            {modal}
+        </>
+    )
 }

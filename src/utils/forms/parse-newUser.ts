@@ -1,16 +1,16 @@
-import { z } from "zod";
+import { z } from 'zod'
 
 export const newUserSchema = z.object({
-  url: z.string().url(),
-});
+    url: z.string().url(),
+})
 export default async function parseNewUser(
-  _: FormData,
+    _: FormData,
 ): Promise<
-  z.SafeParseReturnType<
-    z.infer<typeof newUserSchema>,
-    z.infer<typeof newUserSchema>
-  >
+    z.SafeParseReturnType<
+        z.infer<typeof newUserSchema>,
+        z.infer<typeof newUserSchema>
+    >
 > {
-  const entries = Object.fromEntries(_);
-  return await newUserSchema.safeParseAsync(entries);
+    const entries = Object.fromEntries(_)
+    return await newUserSchema.safeParseAsync(entries)
 }

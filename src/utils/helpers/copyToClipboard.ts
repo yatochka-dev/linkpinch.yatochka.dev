@@ -1,5 +1,5 @@
 export default function copyToClipboard(_: string) {
-  const navigator = window.navigator;
+    const navigator = window.navigator
 
-  return navigator.clipboard.writeText(_);
+    return navigator.clipboard.writeText(_)
 }

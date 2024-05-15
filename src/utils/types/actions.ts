@@ -1,5 +1,5 @@
-export type ActionT = (formData: FormData) => Promise<void>;
+export type ActionT = (formData: FormData) => Promise<void>
 export type ActionStateT<STATE> = (
-  initialState: STATE,
-  formData: FormData,
-) => Promise<void>;
+    initialState: STATE,
+    formData: FormData,
+) => Promise<void>

@@ -1,21 +1,21 @@
-"use client";
+'use client'
 
-import { ShortenedURL } from "@prisma/client";
-import React from "react";
-import { Box, Paper } from "@mui/material";
+import { ShortenedURL } from '@prisma/client'
+import React from 'react'
+import { Box, Paper } from '@mui/material'
 
 interface EditShortenedURLFormProps {
-  page: boolean;
-  data: ShortenedURL & {
-    _count: {
-      clicks: number;
-    };
-  };
+    page: boolean
+    data: ShortenedURL & {
+        _count: {
+            clicks: number
+        }
+    }
 }
 
 export default function EditShortenedURLForm({
-  data,
-  page,
+    data,
+    page,
 }: EditShortenedURLFormProps) {
-  return <Box component={page ? Paper : Box}>hello</Box>;
+    return <Box component={page ? Paper : Box}>hello</Box>
 }
