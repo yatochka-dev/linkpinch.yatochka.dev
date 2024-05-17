@@ -2,6 +2,7 @@ import { db } from '@/server/db'
 import { redirect } from 'next/navigation'
 import registerClickInBackground from '@/utils/functools/registerClickInBackground'
 import { Box, Typography } from '@mui/material'
+import { RedirectType } from 'next/dist/client/components/redirect'
 
 export default async function ShortenedPage({
     params,
@@ -19,9 +20,13 @@ export default async function ShortenedPage({
     })
 
     if (url) {
-        await registerClickInBackground(url)
+        try {
+            await registerClickInBackground(url)
+        } catch (e) {
+            console.error('Error registering click', e)
+        }
 
-        redirect(url.originalURL)
+        redirect(url.originalURL, RedirectType.push)
     }
 
     return (

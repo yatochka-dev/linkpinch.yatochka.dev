@@ -4,6 +4,8 @@ export async function GET(
     _request: Request,
     { params }: { params: { id: string } },
 ) {
+    console.log('params', params)
+
     const url = await db.shortenedURL.findUnique({
         where: {
             id: params.id,

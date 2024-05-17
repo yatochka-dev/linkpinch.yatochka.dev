@@ -29,14 +29,11 @@ interface ShortenedURLProps {
 }
 
 export default function Dashboard_ShortenedURL({ data }: ShortenedURLProps) {
-    const handleCopy = useCallback(
-        (event: React.MouseEvent<HTMLButtonElement>) => {
-            void copyToClipboard(getFullShortenedURL(data, true)).then(() => {
-                toast.success('Copied to clipboard', {})
-            })
-        },
-        [data],
-    )
+    const handleCopy = useCallback(() => {
+        void copyToClipboard(getFullShortenedURL(data, true)).then(() => {
+            toast.success('Copied to clipboard', {})
+        })
+    }, [data])
 
     return (
         <Paper

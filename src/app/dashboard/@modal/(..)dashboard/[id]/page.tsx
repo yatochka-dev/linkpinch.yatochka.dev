@@ -1,33 +1,27 @@
-'use client'
-import EditShortenedURLForm from '@/components/forms/EditShortenedURLForm'
-import React, { useCallback, useState } from 'react'
-import { Dialog, DialogTitle } from '@mui/material'
-import { useRouter } from 'next/navigation'
+import React from 'react'
+import getShortenedLinkByID from '@/utils/functools/getShortenedLinkByID'
+import ClientModal from '@/app/dashboard/@modal/(..)dashboard/[id]/Client'
+import { type ShortenedLinkWithClickCount } from '@/utils/types/dbHelper'
 
-export default function EditModal({
+export default async function EditModal({
     params,
 }: {
     params: {
         id: string
     }
 }) {
-    const router = useRouter()
-    const [open, setOpen] = useState(true)
-    const handleClose = useCallback(() => {
-        setOpen(false)
+    const data = (await getShortenedLinkByID(
+        params.id,
+        true,
+    )) as ShortenedLinkWithClickCount
 
-        const timeoutId = setTimeout(() => {
-            router.back()
-        }, 200)
-
-        return () => clearTimeout(timeoutId)
-    }, [router])
+    if (!data) {
+        throw new Error('Shortened URL not found')
+    }
 
     return (
         <>
-            <Dialog open={open} onClose={handleClose}>
-                <DialogTitle>Lorem ipsum dolor.</DialogTitle>
-            </Dialog>
+            <ClientModal data={data} />
         </>
     )
 }

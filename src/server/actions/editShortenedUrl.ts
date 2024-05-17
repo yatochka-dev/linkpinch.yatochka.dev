@@ -1,17 +1,17 @@
 'use server'
 import auth from '@/utils/functools/auth'
-import parseNewUser from '@/utils/forms/parse-shortenUrl'
 import generateURLPath from '@/utils/helpers/generateURLPath'
 import { db } from '@/server/db'
 import { revalidatePath } from 'next/cache'
+import parseEditShortenedUrl from '@/utils/forms/parse-editShortenedUrl'
 
-export default async function Action_ShortenUrl(
+export default async function Action_EditShortenedUrl(
     _state: NonNullable<unknown>,
     formData: FormData,
 ) {
     const session = await auth()
 
-    const { success, data, error } = await parseNewUser(formData)
+    const { success, data, error } = await parseEditShortenedUrl(formData)
 
     // simulate 5000ms delay
     // await new Promise((resolve) => setTimeout(resolve, 5000))
@@ -26,21 +26,29 @@ export default async function Action_ShortenUrl(
         }
     }
 
-    const path = data.alias ?? (await generateURLPath())
+    const updateData: {
+        originalURL?: string
+        path?: string
+    } = {}
 
-    await db.shortenedURL.create({
-        data: {
-            originalURL: data.url,
-            path,
-            user: {
-                connect: {
-                    id: session.user.id,
-                },
-            },
+    if (data.url) {
+        updateData.originalURL = data.url
+    }
+    if (data.alias) {
+        updateData.path = data.alias
+    }
+
+    console.log('updateData', updateData)
+
+    await db.shortenedURL.update({
+        where: {
+            id: data.id,
         },
+
+        data: updateData,
     })
 
-    revalidatePath('/dashboard')
+    revalidatePath('/dashboard/[id]')
 
     return {
         error: {

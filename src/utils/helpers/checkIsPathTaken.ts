@@ -1,9 +1,15 @@
 import { db } from '@/server/db'
 
-export default async function CheckIsPathTaken(path: string): Promise<boolean> {
+export default async function CheckIsPathTaken(
+    path: string,
+    ignoreID?: string,
+): Promise<boolean> {
     const count = await db.shortenedURL.count({
         where: {
             path,
+            id: {
+                not: ignoreID ?? '',
+            },
         },
     })
 

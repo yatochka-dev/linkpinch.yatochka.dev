@@ -1,6 +1,9 @@
 import CheckIsPathTaken from '@/utils/helpers/checkIsPathTaken'
 
-export default async function CheckIsPathValid(path: string): Promise<boolean> {
+export default async function CheckIsPathValid(
+    path: string,
+    ignoreID?: string,
+): Promise<boolean> {
     if (path.length < 3) {
         return false
     }
@@ -13,5 +16,5 @@ export default async function CheckIsPathValid(path: string): Promise<boolean> {
         return false
     }
 
-    return !(await CheckIsPathTaken(path))
+    return !(await CheckIsPathTaken(path, ignoreID))
 }
