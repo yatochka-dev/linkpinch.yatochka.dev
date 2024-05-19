@@ -1,11 +1,11 @@
 import { z } from 'zod'
-import { matcher } from '@/utils/helpers/checkIsPathValid'
+import { AliasZodString } from '@/utils/zod'
 
 export const shortenUrlSchema = z.object({
     url: z.string().url(),
-    alias: z.string().min(3).max(30).regex(matcher, 'regex').optional(),
+    alias: AliasZodString.optional(),
 })
-export default async function parseNewUser(
+export default async function parseShortenUrl(
     _: FormData,
 ): Promise<
     z.SafeParseReturnType<

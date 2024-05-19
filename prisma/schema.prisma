@@ -80,10 +80,10 @@ model ShortenedURL {
 }
 
 model Click {
-  id    String       @id @default(cuid())
-  urlId String
-  url   ShortenedURL @relation(fields: [urlId], references: [id])
-
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id        String       @id @default(cuid())
+  urlId     String
+  url       ShortenedURL @relation(fields: [urlId], references: [id])
+  metadata  Json         @default("{}")
+  createdAt DateTime     @default(now())
+  updatedAt DateTime     @updatedAt
 }

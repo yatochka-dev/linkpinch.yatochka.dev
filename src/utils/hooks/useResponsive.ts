@@ -10,7 +10,6 @@ export default function useResponsive<Type>(
     defaultValue?: Type,
 ) {
     const width = useWidth()
-    console.log(width)
 
     return _[width] ?? defaultValue
 }

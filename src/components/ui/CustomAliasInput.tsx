@@ -1,21 +1,31 @@
 import FormDisablingTextField from '@/components/ui/FormDisablingTextField'
-import { Box, InputAdornment } from '@mui/material'
-import { env } from '@/env'
+import { Box, InputAdornment, TextFieldProps } from '@mui/material'
 import React, { useEffect, useMemo, useState } from 'react'
 import debounce from '@/utils/helpers/debounce'
+import getAliasInputAdornmentURL from '@/utils/functools/getAliasInputAdornmentURL'
 
 export function CustomAliasInput({
     defaultAlias,
     onChange,
     ignoreID = '',
+    onClear,
+    TextInputProps,
 }: {
     onChange: (value: { v: string; ok: boolean; p: boolean }) => void
     defaultAlias?: string
     ignoreID?: string
+    onClear?: number
+    TextInputProps?: TextFieldProps
 }) {
     const [alias, setAlias] = useState(defaultAlias ?? '')
     const [pending, setPending] = useState(false)
     const [aliasIsOk, setAliasIsOk] = useState(true)
+
+    useEffect(() => {
+        if (ignoreID) return
+
+        setAlias('')
+    }, [ignoreID, onClear])
 
     const debouncedCheckAlias = useMemo(() => {
         return debounce(async (a: string) => {
@@ -54,12 +64,12 @@ export function CustomAliasInput({
         <FormDisablingTextField
             fullWidth
             value={alias}
+            {...TextInputProps}
             onChange={(event) => {
                 setAlias(event.target.value)
             }}
             label={'Custom Alias'}
             variant={'outlined'}
-            name={'alias'}
             required
             helperText={
                 <Box
@@ -112,7 +122,7 @@ export function CustomAliasInput({
             InputProps={{
                 startAdornment: (
                     <InputAdornment position="start">
-                        {env.NEXT_PUBLIC_BASE_URL + '/'}
+                        {getAliasInputAdornmentURL()}
                     </InputAdornment>
                 ),
             }}

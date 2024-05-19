@@ -1,24 +1,15 @@
 import CheckIsPathTaken from '@/utils/helpers/checkIsPathTaken'
+import { AliasZodString } from '@/utils/zod'
 
-export const matcher = /^[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*$|^([a-zA-Z0-9]+)$/
 export default async function CheckIsPathValid(
     path: string,
     ignoreID?: string,
 ): Promise<boolean> {
-    if (path.length < 3) {
+    const { success, data } = await AliasZodString.safeParseAsync(path)
+
+    if (!success) {
         return false
     }
 
-    if (path.length > 30) {
-        return false
-    }
-    console.log('path', path)
-
-    if (!path.match(matcher)) {
-        return false
-    }
-
-    console.log('path', path)
-
-    return !(await CheckIsPathTaken(path, ignoreID))
+    return !(await CheckIsPathTaken(data, ignoreID))
 }

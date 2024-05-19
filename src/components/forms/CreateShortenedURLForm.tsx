@@ -1,39 +1,42 @@
 'use client'
-import React, { useEffect, useMemo, useRef, useState } from 'react'
-import { Box, Paper, TextField, Typography } from '@mui/material'
+import React, { useEffect, useState } from 'react'
+import { Box, Paper, Typography } from '@mui/material'
 import FormLoadingButton from '@/components/ui/FormLoadingButton'
-import debounce from '@/utils/helpers/debounce'
 import { useFormState } from 'react-dom'
 import Action_ShortenUrl from '@/server/actions/shortenUrl'
 import { CustomAliasInput } from '@/components/ui/CustomAliasInput'
 import FormDisablingTextField from '@/components/ui/FormDisablingTextField'
+import { parseWithZod } from '@conform-to/zod'
+import { useForm } from '@conform-to/react'
+import { shortenUrlSchema } from '@/server/actions/schemas/shorten-url'
 
 export default function CreateShortenedURLForm() {
-    const initialState = {
-        error: {
-            url: '',
-            alias: '',
+    const [lastResult, dispatch] = useFormState(Action_ShortenUrl, undefined)
+
+    const [form, fields] = useForm({
+        // Sync the result of last submission
+        lastResult,
+
+        // Reuse the validation logic on the client
+        onValidate({ formData }) {
+            return parseWithZod(formData, { schema: shortenUrlSchema })
         },
-    }
+
+        // Validate the form on blur event triggered
+        shouldValidate: 'onBlur',
+    })
+
     const [alias, setAlias] = useState('')
     const [pending, setPending] = useState(false)
     const [aliasIsOk, setAliasIsOk] = useState(true)
-    const [form, dispatch] = useFormState(Action_ShortenUrl, initialState)
-    const URLFieldRef = useRef<HTMLDivElement | null>(null)
-
-    console.log(form)
+    const [urlValue, setUrlValue] = useState('')
+    const [clearAliasField, setClearAliasField] = useState(0)
+    // const { register, reset, setValue } = useForm<{ url: string }>({})
 
     useEffect(() => {
-        if (!!form.error.url || !!form.error.alias) return
-
-        setAlias('')
-
-        // clear url field
-        const input = URLFieldRef.current?.querySelector('input')
-        if (input) {
-            input.value = ''
-        }
-    }, [form])
+        setClearAliasField((prev) => prev + 1)
+        setUrlValue('')
+    }, [lastResult])
 
     return (
         <Box>
@@ -54,15 +57,24 @@ export default function CreateShortenedURLForm() {
                         mt: 2,
                     }}
                     action={dispatch}
+                    id={form.id}
+                    onSubmit={form.onSubmit}
+                    noValidate
                 >
                     <FormDisablingTextField
                         fullWidth
                         label={'URL'}
                         variant={'outlined'}
-                        name={'url'}
-                        helperText={'Enter the URL you want to shorten'}
+                        helperText={
+                            !!fields.url.errors
+                                ? fields.url.errors
+                                : 'Enter the URL you want to shorten'
+                        }
+                        value={urlValue}
+                        onChange={(e) => setUrlValue(e.target.value)}
+                        error={!!fields.url.errors}
                         required
-                        ref={URLFieldRef}
+                        name={fields.url.name}
                     />
 
                     <CustomAliasInput
@@ -70,6 +82,11 @@ export default function CreateShortenedURLForm() {
                             setAlias(e.v)
                             setAliasIsOk(e.ok)
                             setPending(e.p)
+                        }}
+                        onClear={clearAliasField}
+                        TextInputProps={{
+                            name: fields.alias.name,
+                            error: !!fields.alias.errors,
                         }}
                     />
 

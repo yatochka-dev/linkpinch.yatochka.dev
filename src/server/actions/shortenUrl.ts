@@ -1,36 +1,33 @@
 'use server'
 import auth from '@/utils/functools/auth'
-import parseNewUser from '@/utils/forms/parse-shortenUrl'
+import { parseWithZod } from '@conform-to/zod'
+import { shortenUrlSchema } from '@/server/actions/schemas/shorten-url'
 import generateURLPath from '@/utils/helpers/generateURLPath'
 import { db } from '@/server/db'
 import { revalidatePath } from 'next/cache'
 
 export default async function Action_ShortenUrl(
-    _state: NonNullable<unknown>,
+    _state: unknown,
     formData: FormData,
 ) {
     const session = await auth()
 
-    const { success, data, error } = await parseNewUser(formData)
+    const submission = parseWithZod(formData, {
+        schema: shortenUrlSchema,
+    })
 
-    // simulate 5000ms delay
-    // await new Promise((resolve) => setTimeout(resolve, 5000))
-
-    if (!success) {
-        return {
-            error: {
-                url: error?.errors.find((e) => e.path[0] === 'url')?.message,
-                alias: error?.errors.find((e) => e.path[0] === 'alias')
-                    ?.message,
-            },
-        }
+    if (submission.status !== 'success') {
+        return submission.reply()
     }
 
-    const path = data.alias === '' ? await generateURLPath() : data.alias
+    const path =
+        submission.value.alias === ''
+            ? await generateURLPath()
+            : submission.value.alias
 
     await db.shortenedURL.create({
         data: {
-            originalURL: data.url,
+            originalURL: submission.value.url,
             path,
             user: {
                 connect: {
@@ -41,11 +38,4 @@ export default async function Action_ShortenUrl(
     })
 
     revalidatePath('/dashboard')
-
-    return {
-        error: {
-            url: '',
-            alias: '',
-        },
-    }
 }

@@ -14,15 +14,5 @@ export default async function CheckIsPathTaken(
         },
     })
 
-    console.log('count', count)
-    console.log('count', count)
-    console.log('count', count)
-    console.log('count', count)
-    console.log('count', count)
-    console.log('count', count)
-    console.log('count', count)
-    console.log('count', count)
-    console.log('count', count)
-
     return count !== 0
 }

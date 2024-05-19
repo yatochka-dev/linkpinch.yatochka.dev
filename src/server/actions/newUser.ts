@@ -1,31 +1,29 @@
 'use server'
 
-import parseNewUser from '@/utils/forms/parse-newUser'
-import { redirect } from 'next/navigation'
-import auth from '@/utils/functools/auth'
+import { parseWithZod } from '@conform-to/zod'
 import { db } from '@/server/db'
 import generateURLPath from '@/utils/helpers/generateURLPath'
+import auth from '@/utils/functools/auth'
+import { redirect } from 'next/navigation'
+import { newUserSchema } from '@/server/actions/schemas/new-user'
 
 export default async function Action_NewUser(
-    _state: NonNullable<unknown>,
+    _state: unknown,
     formData: FormData,
 ) {
-    //  imitate delay
-    // await new Promise((resolve) => setTimeout(resolve, 5000));
+    const submission = parseWithZod(formData, {
+        schema: newUserSchema,
+    })
 
     const session = await auth()
 
-    const { success, data } = await parseNewUser(formData)
-
-    if (!success) {
-        return {
-            error: 'Invalid data',
-        }
+    if (submission.status !== 'success') {
+        return submission.reply()
     }
 
     await db.shortenedURL.create({
         data: {
-            originalURL: data.url,
+            originalURL: submission.value.url,
             path: await generateURLPath(),
             user: {
                 connect: {

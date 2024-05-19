@@ -15,7 +15,7 @@ export const metadata = {
     title: 'LinkPinch',
     description:
         'LinkPinch is a URL shortener service that allows you to shorten long URLs and share them easily.',
-    // icons: [{rel: "icon", url: "/favicon.ico"}],
+    icons: [{ rel: 'icon', url: '/LINKPINCH.svg' }],
 }
 
 const font = Poppins({
