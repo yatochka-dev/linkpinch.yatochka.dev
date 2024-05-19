@@ -21,6 +21,8 @@ export default function CreateShortenedURLForm() {
     const [form, dispatch] = useFormState(Action_ShortenUrl, initialState)
     const URLFieldRef = useRef<HTMLDivElement | null>(null)
 
+    console.log(form)
+
     useEffect(() => {
         if (!!form.error.url || !!form.error.alias) return
 

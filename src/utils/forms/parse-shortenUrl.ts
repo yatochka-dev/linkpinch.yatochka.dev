@@ -1,13 +1,9 @@
 import { z } from 'zod'
+import { matcher } from '@/utils/helpers/checkIsPathValid'
 
 export const shortenUrlSchema = z.object({
     url: z.string().url(),
-    alias: z
-        .string()
-        .min(3)
-        .max(30)
-        .regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
-        .optional(),
+    alias: z.string().min(3).max(30).regex(matcher, 'regex').optional(),
 })
 export default async function parseNewUser(
     _: FormData,

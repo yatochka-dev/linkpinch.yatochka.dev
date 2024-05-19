@@ -1,5 +1,6 @@
 import CheckIsPathTaken from '@/utils/helpers/checkIsPathTaken'
 
+export const matcher = /^[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*$|^([a-zA-Z0-9]+)$/
 export default async function CheckIsPathValid(
     path: string,
     ignoreID?: string,
@@ -13,7 +14,7 @@ export default async function CheckIsPathValid(
     }
     console.log('path', path)
 
-    if (!path.match(/^[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*$|^([a-zA-Z0-9]+)$/)) {
+    if (!path.match(matcher)) {
         return false
     }
 
