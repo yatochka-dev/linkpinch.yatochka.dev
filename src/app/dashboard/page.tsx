@@ -47,7 +47,7 @@ export default async function DashboardPage() {
                     py: 4,
                 }}
             >
-                <RefreshPage ui />
+                <RefreshPage />
                 {items.map((item) => (
                     <Dashboard_ShortenedURL
                         key={`${item.id}-dashboard-shortened-url-item`}

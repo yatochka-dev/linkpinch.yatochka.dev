@@ -24,7 +24,12 @@ export function CustomAliasInput({
                 '/api/check-alias?alias=' +
                 encodeURIComponent(a) +
                 (!!ignoreID ? '&ignoreID=' + encodeURIComponent(ignoreID) : '')
-            const res = await fetch(url)
+            const res = await fetch(url, {
+                next: {
+                    revalidate: 0,
+                },
+                cache: 'no-store',
+            })
             const json = (await res.json()) as {
                 ok: boolean
             }
@@ -55,6 +60,7 @@ export function CustomAliasInput({
             label={'Custom Alias'}
             variant={'outlined'}
             name={'alias'}
+            required
             helperText={
                 <Box
                     sx={{

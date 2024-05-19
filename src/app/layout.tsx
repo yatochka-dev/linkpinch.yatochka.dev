@@ -48,19 +48,14 @@ export default async function RootLayout({
                         <Toaster position={'bottom-right'} toastOptions={{}} />
 
                         <Nav session={session} />
-                        <Box
+
+                        <Container
                             sx={{
-                                pl: 'calc(220px)',
+                                py: 4,
                             }}
                         >
-                            <Container
-                                sx={{
-                                    py: 4,
-                                }}
-                            >
-                                {children}
-                            </Container>
-                        </Box>
+                            {children}
+                        </Container>
                     </Box>
                 </html>
             </ThemeProvider>

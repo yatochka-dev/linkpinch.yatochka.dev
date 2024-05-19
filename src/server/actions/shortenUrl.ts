@@ -26,7 +26,7 @@ export default async function Action_ShortenUrl(
         }
     }
 
-    const path = data.alias ?? (await generateURLPath())
+    const path = data.alias === '' ? await generateURLPath() : data.alias
 
     await db.shortenedURL.create({
         data: {

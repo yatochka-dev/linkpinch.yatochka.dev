@@ -6,6 +6,9 @@ export async function GET(request: Request) {
     const alias = searchParams.get('alias')
     const ignoreID = searchParams.get('ignoreID')
 
+    console.log('alias', alias)
+    console.log('ignoreID', ignoreID)
+
     const data = {
         ok: !!alias
             ? await CheckIsPathValid(alias, ignoreID ?? undefined)

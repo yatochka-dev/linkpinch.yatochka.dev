@@ -4,6 +4,7 @@ export default async function CheckIsPathTaken(
     path: string,
     ignoreID?: string,
 ): Promise<boolean> {
+    console.log('path', path)
     const count = await db.shortenedURL.count({
         where: {
             path,
@@ -12,6 +13,16 @@ export default async function CheckIsPathTaken(
             },
         },
     })
+
+    console.log('count', count)
+    console.log('count', count)
+    console.log('count', count)
+    console.log('count', count)
+    console.log('count', count)
+    console.log('count', count)
+    console.log('count', count)
+    console.log('count', count)
+    console.log('count', count)
 
     return count !== 0
 }

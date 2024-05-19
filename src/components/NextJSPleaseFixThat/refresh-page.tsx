@@ -12,7 +12,7 @@ export default function RefreshPage({ ui }: { ui?: boolean }) {
     // const [isPending, setIsPending] = useState(false)
 
     useEffect(() => {
-        toast('Data refreshed')
+        // toast('Data refreshed')
         router.refresh()
     }, [])
 

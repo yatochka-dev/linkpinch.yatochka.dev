@@ -44,6 +44,7 @@ export default function Dashboard_ShortenedURL({ data }: ShortenedURLProps) {
                 display: 'flex',
                 flexDirection: 'row',
                 gap: 2,
+                overflow: 'hidden',
             }}
         >
             <Box>
@@ -189,7 +190,7 @@ export default function Dashboard_ShortenedURL({ data }: ShortenedURLProps) {
                 sx={{
                     mt: -2,
                     display: 'flex',
-                    flexDirection: 'row',
+                    flexDirection: 'column',
                     gap: 2,
                     alignItems: 'flex-start',
                 }}

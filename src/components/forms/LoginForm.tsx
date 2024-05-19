@@ -9,9 +9,7 @@ import { signIn } from 'next-auth/react'
 function LoginForm() {
     const params = useSearchParams()
     const handleGoogleLogin = useCallback(() => {
-        void signIn('google', {
-            callbackUrl: params.get('callbackUrl') ?? '/profile',
-        })
+        void signIn('google')
     }, [params])
     const handleDiscordLogin = useCallback(() => {
         void signIn('discord', {
@@ -50,19 +48,22 @@ function LoginForm() {
                         gap: 2,
                     }}
                 >
-                    {/*<Button onClick={handleGoogleLogin} aria-label={'login-with-google'}>*/}
-                    {/*  <Box*/}
-                    {/*    component={"span"}*/}
-                    {/*    sx={{*/}
-                    {/*      display: "flex",*/}
-                    {/*      gap: 1,*/}
-                    {/*      alignItems: "center",*/}
-                    {/*    }}*/}
-                    {/*  >*/}
-                    {/*    <GoogleIcon />*/}
-                    {/*    Google*/}
-                    {/*  </Box>*/}
-                    {/*</Button>*/}
+                    <Button
+                        onClick={handleGoogleLogin}
+                        aria-label={'login-with-google'}
+                    >
+                        <Box
+                            component={'span'}
+                            sx={{
+                                display: 'flex',
+                                gap: 1,
+                                alignItems: 'center',
+                            }}
+                        >
+                            {/*<GoogleIcon />*/}
+                            Google
+                        </Box>
+                    </Button>
                     <Button onClick={handleDiscordLogin}>
                         <Box
                             component={'span'}

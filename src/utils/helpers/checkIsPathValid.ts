@@ -11,10 +11,13 @@ export default async function CheckIsPathValid(
     if (path.length > 30) {
         return false
     }
+    console.log('path', path)
 
-    if (!path.match(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)) {
+    if (!path.match(/^[a-zA-Z0-9]+(?:-[a-zA-Z0-9]+)*$|^([a-zA-Z0-9]+)$/)) {
         return false
     }
+
+    console.log('path', path)
 
     return !(await CheckIsPathTaken(path, ignoreID))
 }
