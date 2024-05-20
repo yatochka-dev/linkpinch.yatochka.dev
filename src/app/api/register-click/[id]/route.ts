@@ -1,10 +1,11 @@
 import { db } from '@/server/db'
+import { kv } from '@vercel/kv'
 
 export async function GET(
-    _request: Request,
+    request: Request,
     { params }: { params: { id: string } },
 ) {
-    console.log('params', params)
+    const { searchParams } = new URL(request.url)
 
     const url = await db.shortenedURL.findUnique({
         where: {
@@ -19,9 +20,16 @@ export async function GET(
             }),
         )
     }
-
+    const key = searchParams.get('cron') ?? ''
+    const metadata = (await kv.get(key)) ?? '{}'
+    try {
+        await kv.del(key)
+    } catch (e) {
+        console.log('Failed to delete key', key, e)
+    }
     const res = await db.click.create({
         data: {
+            metadata,
             url: {
                 connect: {
                     id: url.id,

@@ -2,8 +2,10 @@ import { withAuth } from 'next-auth/middleware'
 
 export default withAuth({
     // Matches the pages config in `[...nextauth]`
+
     callbacks: {
         authorized: async ({ req }) => {
+            console.log('running authorized callback')
             // const session = getServerAuthSession();
             // console.log('session', session);
             const tokenCookie = 'next-auth.session-token'
@@ -16,6 +18,7 @@ export default withAuth({
             return !!token
         },
     },
+
     pages: {
         signIn: '/login',
         error: '/error',
