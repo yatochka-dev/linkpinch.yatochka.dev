@@ -5,6 +5,7 @@ import Divider from '@mui/material/Divider'
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList'
 import {
     Avatar,
+    Container,
     Drawer,
     IconButton,
     Menu,
@@ -21,7 +22,7 @@ import {
     bindTrigger,
     usePopupState,
 } from 'material-ui-popup-state/hooks'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { signOut } from 'next-auth/react'
 import { NavLink } from '@/components/ui/NavLink'
 
@@ -48,6 +49,10 @@ export default function Nav({ session }: { session: Session | null }) {
         drawerOpen,
     )
 
+    const isDrawerMobile = useMemo(() => {
+        return type === 'temporary'
+    }, [type])
+
     const loggedIn = !!session
     const popupState = usePopupState({
         variant: 'popover',
@@ -65,19 +70,21 @@ export default function Nav({ session }: { session: Session | null }) {
 
     return (
         <>
-            <IconButton
-                sx={{
-                    mt: 2,
-                    ml: 0.8,
-                }}
-                onClick={handleDrawerToggle}
-            >
-                <MenuIcon
+            {isDrawerMobile && (
+                <Container
                     sx={{
-                        fontSize: '2.5rem',
+                        pt: 4,
                     }}
-                />
-            </IconButton>
+                >
+                    <IconButton sx={{}} onClick={handleDrawerToggle}>
+                        <MenuIcon
+                            sx={{
+                                fontSize: '2.5rem',
+                            }}
+                        />
+                    </IconButton>
+                </Container>
+            )}
             <Drawer
                 variant={type}
                 open={open}
