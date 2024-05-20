@@ -9,7 +9,9 @@ export default withAuth({
             const tokenCookie = 'next-auth.session-token'
             const token =
                 req.cookies.get(tokenCookie) ??
-                req.cookies.get('__Host-next-auth.csrf-token')
+                req.cookies.get('__Host-next-auth.csrf-token') ??
+                req.cookies.get('next-auth.csrf-token') ??
+                req.cookies.get('__Secure-next-auth.session-token')
             console.info('token', token)
             return !!token
         },
