@@ -110,7 +110,7 @@ export default function EditShortenedURLForm({
 
                 <TextField
                     type={'hidden'}
-                    name={'id'}
+                    name={fields.id.name}
                     value={data.id}
                     sx={{ display: 'none' }}
                 ></TextField>
