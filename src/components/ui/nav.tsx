@@ -144,16 +144,17 @@ export default function Nav({ session }: { session: Session | null }) {
                 PaperProps={{
                     sx: {
                         width: width,
-                        pt: 2,
                         maxHeight: '100dvh',
                         // transform: "translateY(10dvh) translateX(1dvw)",
                     },
+                    variant: 'outlined',
                 }}
                 onClose={onDrawerClose}
             >
                 <Box
                     sx={{
                         mx: 2,
+                        pt: 2,
                     }}
                 >
                     <Typography
