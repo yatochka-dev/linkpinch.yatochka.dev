@@ -5,6 +5,7 @@ import { shortenUrlSchema } from '@/server/actions/schemas/shorten-url'
 import generateURLPath from '@/utils/helpers/generateURLPath'
 import { db } from '@/server/db'
 import { revalidatePath } from 'next/cache'
+import CheckIsPathTaken from '@/utils/helpers/checkIsPathTaken'
 
 export default async function Action_ShortenUrl(
     _state: unknown,
@@ -18,6 +19,19 @@ export default async function Action_ShortenUrl(
 
     if (submission.status !== 'success') {
         return submission.reply()
+    }
+
+    const isPathTaken = await CheckIsPathTaken(submission.value.alias ?? '')
+
+    if (isPathTaken) {
+        return submission.reply({
+            formErrors: [
+                "The alias you've chosen is already taken. Please choose another.",
+            ],
+            fieldErrors: {
+                alias: ['This alias is already taken.'],
+            },
+        })
     }
 
     const path =
@@ -38,4 +52,8 @@ export default async function Action_ShortenUrl(
     })
 
     revalidatePath('/dashboard')
+
+    return submission.reply({
+        resetForm: true,
+    })
 }

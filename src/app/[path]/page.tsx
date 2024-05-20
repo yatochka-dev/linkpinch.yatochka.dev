@@ -3,6 +3,7 @@ import { redirect } from 'next/navigation'
 import registerClickInBackground from '@/utils/functools/registerClickInBackground'
 import { Box, Typography } from '@mui/material'
 import { RedirectType } from 'next/dist/client/components/redirect'
+import { cookies, headers } from 'next/headers'
 
 export default async function ShortenedPage({
     params,
@@ -11,6 +12,11 @@ export default async function ShortenedPage({
         path: string
     }
 }) {
+    const h = headers()
+    const c = cookies()
+    // console.dir(h)
+    // console.dir(c)
+
     const path = params.path
 
     const url = await db.shortenedURL.findUnique({
@@ -21,7 +27,7 @@ export default async function ShortenedPage({
 
     if (url) {
         try {
-            await registerClickInBackground(url)
+            await registerClickInBackground(url, JSON.stringify(h))
         } catch (e) {
             console.error('Error registering click', e)
         }

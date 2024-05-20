@@ -23,7 +23,7 @@ export default function CreateShortenedURLForm() {
         },
 
         // Validate the form on blur event triggered
-        shouldValidate: 'onBlur',
+        shouldValidate: 'onInput',
     })
 
     const [alias, setAlias] = useState('')

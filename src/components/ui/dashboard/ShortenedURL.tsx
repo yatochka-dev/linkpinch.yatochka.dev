@@ -1,24 +1,24 @@
 'use client'
 import React, { useCallback } from 'react'
 import { type ShortenedURL } from '@prisma/client'
-import {
-    Avatar,
-    Box,
-    IconButton,
-    Paper,
-    Tooltip,
-    Typography,
-} from '@mui/material'
+import { Avatar, Box, Paper, Tooltip, Typography } from '@mui/material'
 import Link from 'next/link'
 import getFaviconFromURL from '@/utils/helpers/getFaviconFromURL'
 import getFullShortenedURL from '@/utils/helpers/getFullShortenedURL'
-import Button from '@mui/material/Button'
 import ContentCopyIcon from '@mui/icons-material/ContentCopy'
 import EditIcon from '@mui/icons-material/Edit'
 import BarChartIcon from '@mui/icons-material/BarChart'
 import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
 import copyToClipboard from '@/utils/helpers/copyToClipboard'
 import { toast } from 'react-hot-toast'
+import DeleteIcon from '@mui/icons-material/Delete'
+import { deleteShortenedURL } from '@/server/actions/delete-shortened-url'
+import { useFormState } from 'react-dom'
+import { useForm } from '@conform-to/react'
+import { parseWithZod } from '@conform-to/zod'
+import { deleteShortenedURLSchema } from '@/server/actions/schemas/delete-shortened-url'
+import useResponsive from '@/utils/hooks/useResponsive'
+import FormLoadingButton from '@/components/ui/FormLoadingButton'
 
 interface ShortenedURLProps {
     data: ShortenedURL & {
@@ -28,12 +28,101 @@ interface ShortenedURLProps {
     }
 }
 
-export default function Dashboard_ShortenedURL({ data }: ShortenedURLProps) {
+function ShortenedURLActions({
+    data,
+}: {
+    data: ShortenedURL & {
+        _count: {
+            clicks: number
+        }
+    }
+}) {
     const handleCopy = useCallback(() => {
         void copyToClipboard(getFullShortenedURL(data, true)).then(() => {
             toast.success('Copied to clipboard', {})
         })
     }, [data])
+
+    const [lastResult, action] = useFormState(deleteShortenedURL, undefined)
+    const [form, fields] = useForm({
+        // Sync the result of last submission
+        lastResult,
+
+        // Reuse the validation logic on the client
+        onValidate({ formData }) {
+            return parseWithZod(formData, { schema: deleteShortenedURLSchema })
+        },
+
+        // Validate the form on blur event triggered
+        shouldValidate: 'onBlur',
+    })
+    return (
+        <form action={action} id={form.id} onSubmit={form.onSubmit} noValidate>
+            <Box
+                sx={{
+                    mt: -2,
+                    display: 'flex',
+                    flexDirection: 'row',
+                    gap: 2,
+                    alignItems: 'flex-start',
+                }}
+            >
+                <FormLoadingButton
+                    startIcon={<ContentCopyIcon />}
+                    size={'small'}
+                    variant={'outlined'}
+                    onClick={handleCopy}
+                >
+                    <Box
+                        component={'span'}
+                        sx={{
+                            mt: 0.2,
+                        }}
+                    >
+                        Copy
+                    </Box>
+                </FormLoadingButton>
+
+                <FormLoadingButton
+                    size={'small'}
+                    variant={'text'}
+                    sx={{
+                        minWidth: 32,
+                    }}
+                    component={Link}
+                    href={`/dashboard/${data.id}`}
+                >
+                    <EditIcon />
+                </FormLoadingButton>
+
+                <input type={'hidden'} name={fields.id.name} value={data.id} />
+                <FormLoadingButton
+                    size={'small'}
+                    variant={'text'}
+                    sx={{
+                        minWidth: 32,
+                    }}
+                    type={'submit'}
+                    // component={Link}
+                    // href={`/dashboard/${data.id}`}
+                >
+                    <DeleteIcon />
+                </FormLoadingButton>
+            </Box>
+        </form>
+    )
+}
+
+export default function Dashboard_ShortenedURL({ data }: ShortenedURLProps) {
+    const direction = useResponsive<'column' | 'row'>(
+        {
+            xs: 'column',
+            xsm: 'column',
+            zero: 'column',
+            sm: 'column',
+        },
+        'row',
+    )
 
     return (
         <Paper
@@ -42,7 +131,7 @@ export default function Dashboard_ShortenedURL({ data }: ShortenedURLProps) {
                 width: '100%',
                 mt: 4,
                 display: 'flex',
-                flexDirection: 'row',
+                flexDirection: direction,
                 gap: 2,
                 overflow: 'hidden',
             }}
@@ -186,42 +275,7 @@ export default function Dashboard_ShortenedURL({ data }: ShortenedURLProps) {
                 </Box>
             </Box>
             <Box flexGrow={1} />
-            <Box
-                sx={{
-                    mt: -2,
-                    display: 'flex',
-                    flexDirection: 'column',
-                    gap: 2,
-                    alignItems: 'flex-start',
-                }}
-            >
-                <Button
-                    startIcon={<ContentCopyIcon />}
-                    size={'small'}
-                    variant={'outlined'}
-                    onClick={handleCopy}
-                >
-                    <Box
-                        component={'span'}
-                        sx={{
-                            mt: 0.2,
-                        }}
-                    >
-                        Copy
-                    </Box>
-                </Button>
-                <Button
-                    size={'small'}
-                    variant={'text'}
-                    sx={{
-                        minWidth: 32,
-                    }}
-                    component={Link}
-                    href={`/dashboard/${data.id}`}
-                >
-                    <EditIcon />
-                </Button>
-            </Box>
+            <ShortenedURLActions data={data} />
         </Paper>
     )
 }

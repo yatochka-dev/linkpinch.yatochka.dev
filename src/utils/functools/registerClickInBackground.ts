@@ -3,9 +3,10 @@ import { env } from '@/env'
 
 export default async function registerClickInBackground(
     item: ShortenedURL,
+    meta?: string,
 ): Promise<boolean> {
     const url = new URL(
-        `${env.BACKGROUND_API_URL}register-click/${encodeURIComponent(item.id)}`,
+        `${env.BACKGROUND_API_URL}register-click/${encodeURIComponent(item.id)}?meta=${encodeURIComponent(meta ?? '')}`,
     )
 
     const resp = await fetch(url, {
