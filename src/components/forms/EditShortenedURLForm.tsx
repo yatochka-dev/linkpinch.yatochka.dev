@@ -10,6 +10,9 @@ import FormLoadingButton from '@/components/ui/FormLoadingButton'
 import dynamic from 'next/dynamic'
 import Action_EditShortenedUrl from '@/server/actions/editShortenedUrl'
 import { useFormState } from 'react-dom'
+import { useForm } from '@conform-to/react'
+import { editShortenedURLSchema } from '@/server/actions/schemas/edit-shortened-url'
+import { parseWithZod } from '@conform-to/zod'
 
 const GoBackToDashboard = dynamic(
     () => import('@/components/ui/GoBackToDashboard'),
@@ -28,24 +31,32 @@ export default function EditShortenedURLForm({
     page,
     data,
 }: EditShortenedURLFormProps) {
-    const initialState = {
-        error: {
-            url: '',
-            alias: '',
-        },
-    }
     const [alias, setAlias] = useState(data.path)
     const [pending, setPending] = useState(false)
     const [aliasIsOk, setAliasIsOk] = useState(true)
 
-    const [form, dispatch] = useFormState(Action_EditShortenedUrl, initialState)
+    const [lastResult, dispatch] = useFormState(
+        Action_EditShortenedUrl,
+        undefined,
+    )
+    const [form, fields] = useForm({
+        // Sync the result of last submission
+        lastResult,
 
+        // Reuse the validation logic on the client
+        onValidate({ formData }) {
+            return parseWithZod(formData, { schema: editShortenedURLSchema })
+        },
+
+        // Validate the form on blur event triggered
+        shouldValidate: 'onBlur',
+    })
     return (
         <Box
             sx={
                 page
                     ? {
-                          minHeight: 'calc(100vh - 64px)',
+                          minHeight: 'calc(100vh - 200px)',
                           display: 'flex',
                           alignItems: 'center',
                           justifyContent: 'center',
@@ -62,7 +73,10 @@ export default function EditShortenedURLForm({
                     gap: 2,
                     minWidth: '40vw',
                 }}
+                id={form.id}
+                onSubmit={form.onSubmit}
                 action={dispatch}
+                noValidate
             >
                 {page && <GoBackToDashboard />}
 
@@ -70,9 +84,14 @@ export default function EditShortenedURLForm({
                     fullWidth
                     label={'URL'}
                     variant={'outlined'}
-                    name={'url'}
-                    helperText={'Enter the URL you want to shorten'}
+                    error={!!fields.url.errors}
+                    helperText={
+                        !!fields.url.errors
+                            ? fields.url.errors
+                            : 'Enter the URL you want to shorten'
+                    }
                     required
+                    name={fields.url.name}
                     defaultValue={data.originalURL}
                 />
 
@@ -84,6 +103,9 @@ export default function EditShortenedURLForm({
                     }}
                     defaultAlias={data.path}
                     ignoreID={data.id}
+                    TextInputProps={{
+                        name: fields.alias.name,
+                    }}
                 />
 
                 <TextField

@@ -1,59 +1,45 @@
 'use server'
 import auth from '@/utils/functools/auth'
-import generateURLPath from '@/utils/helpers/generateURLPath'
 import { db } from '@/server/db'
 import { revalidatePath } from 'next/cache'
-import parseEditShortenedUrl from '@/utils/forms/parse-editShortenedUrl'
+import { parseWithZod } from '@conform-to/zod'
+import { editShortenedURLSchema } from '@/server/actions/schemas/edit-shortened-url'
 
 export default async function Action_EditShortenedUrl(
-    _state: NonNullable<unknown>,
+    _state: unknown,
     formData: FormData,
 ) {
-    const session = await auth()
+    await auth()
 
-    const { success, data, error } = await parseEditShortenedUrl(formData)
+    const submission = parseWithZod(formData, {
+        schema: editShortenedURLSchema,
+    })
 
+    if (submission.status !== 'success') {
+        return submission.reply()
+    }
     // simulate 5000ms delay
     // await new Promise((resolve) => setTimeout(resolve, 5000))
-
-    if (!success) {
-        return {
-            error: {
-                url: error?.errors.find((e) => e.path[0] === 'url')?.message,
-                alias: error?.errors.find((e) => e.path[0] === 'alias')
-                    ?.message,
-            },
-        }
-    }
 
     const updateData: {
         originalURL?: string
         path?: string
     } = {}
 
-    if (data.url) {
-        updateData.originalURL = data.url
+    if (submission.value.url) {
+        updateData.originalURL = submission.value.url
     }
-    if (data.alias) {
-        updateData.path = data.alias
+    if (submission.value.alias) {
+        updateData.path = submission.value.alias
     }
-
-    console.log('updateData', updateData)
 
     await db.shortenedURL.update({
         where: {
-            id: data.id,
+            id: submission.value.id,
         },
 
         data: updateData,
     })
 
     revalidatePath('/dashboard/[id]')
-
-    return {
-        error: {
-            url: '',
-            alias: '',
-        },
-    }
 }
