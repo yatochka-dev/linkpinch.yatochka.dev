@@ -3,14 +3,15 @@ import { env } from '@/env'
 
 export default async function registerClickInBackground(
     item: ShortenedURL,
-    meta?: string,
+    cron?: string,
 ): Promise<boolean> {
     const url = new URL(
-        `${env.BACKGROUND_API_URL}register-click/${encodeURIComponent(item.id)}?meta=${encodeURIComponent(meta ?? '')}`,
+        `${env.BACKGROUND_API_URL}register-click/${encodeURIComponent(item.id)}?cron=${encodeURIComponent(cron ?? '')}`,
     )
 
     const resp = await fetch(url, {
         method: 'GET',
+        cache: 'no-store',
     })
 
     const json = (await resp.json()) as {
