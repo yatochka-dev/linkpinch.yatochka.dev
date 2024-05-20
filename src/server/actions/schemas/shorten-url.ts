@@ -1,9 +1,7 @@
 import { z } from 'zod'
-import { AliasZodString } from '@/utils/zod'
+import { AliasZodString, UrlZodString } from '@/utils/zod'
 
 export const shortenUrlSchema = z.object({
-    url: z
-        .string({ message: 'This field is required' })
-        .url("This doesn't look like a valid URL. Please try again."),
+    url: UrlZodString,
     alias: AliasZodString.optional(),
 })

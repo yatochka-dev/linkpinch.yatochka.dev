@@ -79,7 +79,20 @@ export default function EditShortenedURLForm({
                 noValidate
             >
                 {page && <GoBackToDashboard />}
-
+                <FormDisablingTextField
+                    fullWidth
+                    label={'Title'}
+                    variant={'outlined'}
+                    error={!!fields.title.errors}
+                    helperText={
+                        !!fields.title.errors
+                            ? fields.title.errors
+                            : 'Enter the URL you want to shorten'
+                    }
+                    required
+                    name={fields.title.name}
+                    defaultValue={data.title !== null ? data.title : ''}
+                />
                 <FormDisablingTextField
                     fullWidth
                     label={'URL'}
