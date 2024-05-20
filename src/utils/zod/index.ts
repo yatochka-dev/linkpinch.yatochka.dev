@@ -9,15 +9,20 @@ export const UrlZodString = z
     .url("This doesn't look like a valid URL. Please try again.")
     .refine(
         (u) => {
-            const isHttp = u.startsWith('http://') || u.startsWith('https://')
+            try {
+                const isHttp =
+                    u.startsWith('http://') || u.startsWith('https://')
 
-            if (!isHttp) {
+                if (!isHttp) {
+                    return false
+                }
+
+                const uo = new URL(u)
+                const nuo = new URL(env.NEXT_PUBLIC_BASE_URL)
+                return uo.host !== nuo.host
+            } catch (e) {
                 return false
             }
-
-            const uo = new URL(u)
-            const nuo = new URL(env.NEXT_PUBLIC_BASE_URL)
-            return uo.host !== nuo.host
         },
         { message: 'This URL is already shortened.' },
     )

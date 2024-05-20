@@ -91,7 +91,7 @@ export default function EditShortenedURLForm({
                     }
                     required
                     name={fields.title.name}
-                    defaultValue={data.title !== null ? data.title : ''}
+                    defaultValue={data.title ?? ''}
                 />
                 <FormDisablingTextField
                     fullWidth
