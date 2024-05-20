@@ -13,19 +13,19 @@ export default function ClientModal({ data }: ClientModalProps) {
     return (
         <>
             <PageDialog
-                sx={{
-                    '& .MuiPaper-root': {
-                        width: '45dvw',
-                        maxWidth: '45dvw',
-                    },
-                }}
+                sx={
+                    {
+                        // width: 'clamp(100%, 40vw, 600px)',
+                    }
+                }
             >
                 <DialogTitle>Edit Shortened URL</DialogTitle>
                 <DialogContent
-                    sx={{
-                        minWidth: '45dvw',
-                        maxWidth: '45dvw',
-                    }}
+                    sx={
+                        {
+                            // width: 'clamp(100%, 40vw, 600px)',
+                        }
+                    }
                 >
                     <EditShortenedURLForm data={data} page={false} />
                 </DialogContent>

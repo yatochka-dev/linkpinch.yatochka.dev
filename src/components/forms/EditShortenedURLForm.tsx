@@ -67,11 +67,9 @@ export default function EditShortenedURLForm({
             <Box
                 component={'form'}
                 sx={{
-                    p: 1,
                     display: 'flex',
                     flexDirection: 'column',
                     gap: 2,
-                    minWidth: '40vw',
                 }}
                 id={form.id}
                 onSubmit={form.onSubmit}
