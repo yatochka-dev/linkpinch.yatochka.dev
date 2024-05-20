@@ -1,13 +1,11 @@
 'use client'
 import Box from '@mui/material/Box'
-
-import Button from '@mui/material/Button'
 import MenuIcon from '@mui/icons-material/Menu'
 import Divider from '@mui/material/Divider'
 import FeaturedPlayListIcon from '@mui/icons-material/FeaturedPlayList'
 import {
     Avatar,
-    type ButtonProps,
+    Container,
     Drawer,
     IconButton,
     Menu,
@@ -24,66 +22,9 @@ import {
     bindTrigger,
     usePopupState,
 } from 'material-ui-popup-state/hooks'
-import React, { useCallback, useState } from 'react'
+import React, { useCallback, useMemo, useState } from 'react'
 import { signOut } from 'next-auth/react'
-
-function NavLink({
-    last = false,
-    icon,
-    href,
-    newTab,
-    children,
-    profile,
-    buttonProps,
-}: {
-    last?: boolean
-    icon?: React.ReactNode
-    href?: string
-    newTab?: boolean
-    children?: React.ReactNode
-    profile?: boolean
-    buttonProps?: ButtonProps
-}) {
-    return (
-        <>
-            <Button
-                {...buttonProps}
-                sx={{
-                    mb: profile ? 0.3 : 0,
-                    borderRadius: 0,
-                    py: 1.8,
-                    textTransform: 'none',
-                    fontWeight: 600,
-                    fontSize: '1rem',
-                    textAlign: 'center',
-                    position: 'relative',
-                }}
-                variant={'text'}
-                startIcon={
-                    <Box
-                        sx={{
-                            position: 'absolute',
-                            left: 0,
-                            // top: profile ? '50%' : '56%',
-                            transform: 'translateY(-50%)',
-                            ml: 2,
-                        }}
-                    >
-                        {icon}
-                    </Box>
-                }
-                component={href ? Link : 'button'}
-                target={newTab ? '_blank' : undefined}
-                href={href ? href : undefined}
-            >
-                <Box component={'span'} sx={{}}>
-                    {children ? children : 'Link'}
-                </Box>
-            </Button>
-            {!last && <Divider />}
-        </>
-    )
-}
+import { NavLink } from '@/components/ui/NavLink'
 
 export default function Nav({ session }: { session: Session | null }) {
     const width = useResponsive({}, '220px')
@@ -108,6 +49,10 @@ export default function Nav({ session }: { session: Session | null }) {
         drawerOpen,
     )
 
+    const isDrawerMobile = useMemo(() => {
+        return type === 'temporary'
+    }, [type])
+
     const loggedIn = !!session
     const popupState = usePopupState({
         variant: 'popover',
@@ -125,35 +70,38 @@ export default function Nav({ session }: { session: Session | null }) {
 
     return (
         <>
-            <IconButton
-                sx={{
-                    mt: 2,
-                    ml: 0.8,
-                }}
-                onClick={handleDrawerToggle}
-            >
-                <MenuIcon
+            {isDrawerMobile && (
+                <Container
                     sx={{
-                        fontSize: '2.5rem',
+                        pt: 4,
                     }}
-                />
-            </IconButton>
+                >
+                    <IconButton sx={{}} onClick={handleDrawerToggle}>
+                        <MenuIcon
+                            sx={{
+                                fontSize: '2.5rem',
+                            }}
+                        />
+                    </IconButton>
+                </Container>
+            )}
             <Drawer
                 variant={type}
                 open={open}
                 PaperProps={{
                     sx: {
                         width: width,
-                        pt: 2,
                         maxHeight: '100dvh',
                         // transform: "translateY(10dvh) translateX(1dvw)",
                     },
+                    variant: 'outlined',
                 }}
                 onClose={onDrawerClose}
             >
                 <Box
                     sx={{
                         mx: 2,
+                        pt: 2,
                     }}
                 >
                     <Typography
