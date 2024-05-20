@@ -8,7 +8,7 @@ export default async function ProfilePage() {
     //         },
     //     },
     // })
-    throw new Error('This is an error')
+    // throw new Error('This is an error')
 
     return <h1>Profile</h1>
 }

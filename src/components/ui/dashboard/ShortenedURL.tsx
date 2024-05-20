@@ -161,8 +161,8 @@ export default function Dashboard_ShortenedURL({ data }: ShortenedURLProps) {
                         mt: -1,
                     }}
                 >
-                    {data.webPageTitle ??
-                        "Some random title until I manage to fetch page's titles"}
+                    {data.title ??
+                        "Couldn't fetch the title for this page, you can assign one manually."}
                 </Typography>
                 <Typography
                     color={'info.main'}

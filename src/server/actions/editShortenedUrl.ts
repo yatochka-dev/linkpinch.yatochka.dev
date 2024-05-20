@@ -24,6 +24,7 @@ export default async function Action_EditShortenedUrl(
     const updateData: {
         originalURL?: string
         path?: string
+        title?: string
     } = {}
 
     if (submission.value.url) {
@@ -31,6 +32,10 @@ export default async function Action_EditShortenedUrl(
     }
     if (submission.value.alias) {
         updateData.path = submission.value.alias
+    }
+
+    if (submission.value.title) {
+        updateData.title = submission.value.title
     }
 
     await db.shortenedURL.update({
@@ -41,5 +46,5 @@ export default async function Action_EditShortenedUrl(
         data: updateData,
     })
 
-    revalidatePath('/dashboard/[id]')
+    revalidatePath('/dashboard', 'layout')
 }

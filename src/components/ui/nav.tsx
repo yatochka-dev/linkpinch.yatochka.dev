@@ -12,7 +12,6 @@ import {
     IconButton,
     Menu,
     MenuItem,
-    Paper,
     Typography,
 } from '@mui/material'
 import useResponsive from '@/utils/hooks/useResponsive'
@@ -50,6 +49,7 @@ function NavLink({
             <Button
                 {...buttonProps}
                 sx={{
+                    mb: profile ? 0.3 : 0,
                     borderRadius: 0,
                     py: 1.8,
                     textTransform: 'none',
@@ -64,7 +64,7 @@ function NavLink({
                         sx={{
                             position: 'absolute',
                             left: 0,
-                            top: profile ? '50%' : '56%',
+                            // top: profile ? '50%' : '56%',
                             transform: 'translateY(-50%)',
                             ml: 2,
                         }}
@@ -116,12 +116,9 @@ export default function Nav({ session }: { session: Session | null }) {
     const handleLogout = useCallback(() => {
         void signOut()
     }, [])
-    const handleDrawerToggle = useCallback(
-        (event: React.MouseEvent<HTMLButtonElement>) => {
-            setDrawerOpen((prev) => !prev)
-        },
-        [],
-    )
+    const handleDrawerToggle = useCallback(() => {
+        setDrawerOpen((prev) => !prev)
+    }, [])
     const onDrawerClose = useCallback(() => {
         setDrawerOpen(false)
     }, [])
@@ -217,6 +214,7 @@ export default function Nav({ session }: { session: Session | null }) {
                                 profile
                                 last
                                 // href={'/profile'}
+
                                 icon={
                                     <Avatar
                                         src={
