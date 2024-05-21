@@ -5,6 +5,7 @@ import registerAnalyticsUrlClick from '@/utils/functools/register-analytics-url-
 import { RedirectType } from 'next/dist/client/components/redirect'
 import { generateID } from '@/utils/functools/generate-path-for-shortened-url'
 import { kv } from '@vercel/kv'
+import getDeviceFromHeaders from '@/utils/functools/get-device-from-headers'
 
 function redirectToError(code: number) {
     redirect(`/not-found-page/${code}`)
@@ -33,12 +34,11 @@ async function GET(
 
             const ip = req.headers.get('x-forwarded-for')
             const key = `cronjob-linkpinch-${generatedID}`
-            console.log('cronjob-linkpinch', generatedID, {
-                path,
-                ip,
-                location,
-            })
-            await kv.set(key, JSON.stringify({ path, ip, location }))
+            const device = getDeviceFromHeaders(req.headers)
+            const m = { path, ip, location, device }
+            console.log('cronjob-linkpinch', generatedID, m)
+
+            await kv.set(key, JSON.stringify(m))
             await registerAnalyticsUrlClick(url, key)
         } catch (e) {
             console.error('Error registering click', e)
