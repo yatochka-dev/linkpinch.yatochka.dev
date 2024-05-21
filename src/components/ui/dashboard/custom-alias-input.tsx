@@ -1,8 +1,8 @@
 import PendingTextfield from '@/components/ui/pending-textfield'
-import { Box, InputAdornment, TextFieldProps } from '@mui/material'
+import { Box, InputAdornment, type TextFieldProps } from '@mui/material'
 import React, { useEffect, useMemo, useState } from 'react'
-import debounce from '@/utils/helpers/debounce'
-import getAliasInputAdornmentURL from '@/utils/functools/getAliasInputAdornmentURL'
+import debounce from '@/utils/functools/debounce'
+import getBaseUrl from '@/utils/functools/get-base-url'
 
 export function CustomAliasInput({
     defaultAlias,
@@ -122,7 +122,7 @@ export function CustomAliasInput({
             InputProps={{
                 startAdornment: (
                     <InputAdornment position="start">
-                        {getAliasInputAdornmentURL()}
+                        {getBaseUrl()}
                     </InputAdornment>
                 ),
             }}

@@ -1,7 +1,7 @@
 import { db } from '@/server/db'
-import { ShortenedLinkWithClickCount } from '@/utils/types/dbHelper'
+import { ShortenedLinkWithClickCount } from '@/utils/types/db'
 
-export default async function getShortenedLinkByID(id: string, clicks: true) {
+export default async function getShortenedUrl(id: string, clicks: true) {
     return !clicks
         ? db.shortenedURL.findUnique({
               where: {

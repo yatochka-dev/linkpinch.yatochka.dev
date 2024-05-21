@@ -1,7 +1,7 @@
 import { type ShortenedURL } from '@prisma/client'
 import { env } from '@/env'
 
-export default async function registerClickInBackground(
+export default async function registerAnalyticsUrlClick(
     item: ShortenedURL,
     cron?: string,
 ): Promise<boolean> {

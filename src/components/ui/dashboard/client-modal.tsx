@@ -2,7 +2,7 @@
 import React from 'react'
 import { DialogContent, DialogTitle } from '@mui/material'
 import EditShortenedURLForm from '@/components/forms/edit-shortened-url-form'
-import { type ShortenedLinkWithClickCount } from '@/utils/types/dbHelper'
+import { type ShortenedLinkWithClickCount } from '@/utils/types/db'
 import { PageDialog } from '@/components/ui/page-dialog'
 
 interface ClientModalProps {

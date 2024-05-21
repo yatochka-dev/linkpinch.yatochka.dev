@@ -2,7 +2,7 @@
 
 import { parseWithZod } from '@conform-to/zod'
 import { db } from '@/server/db'
-import generateURLPath from '@/utils/helpers/generateURLPath'
+import generateURLPath from '@/utils/functools/generate-path-for-shortened-url'
 import auth from '@/utils/functools/auth'
 import { redirect } from 'next/navigation'
 import { signNewUserSchema } from '@/server/actions/schemas/sign-new-user-schema'

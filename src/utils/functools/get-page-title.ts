@@ -1,4 +1,4 @@
-export default async function getPageTitleFromURL(
+export default async function getPageTitle(
     url: string,
 ): Promise<string | undefined> {
     const u = new URL(url)

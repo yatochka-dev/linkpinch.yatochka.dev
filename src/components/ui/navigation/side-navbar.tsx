@@ -15,7 +15,7 @@ import {
 import useResponsive from '@/utils/hooks/useResponsive'
 import Link from 'next/link'
 import { type Session } from 'next-auth'
-import { getDefaultAvatar } from '@/utils/functools/getDefaultAvatar'
+import { getDefaultAvatar } from '@/utils/functools/get-default-avatar'
 import Logo from '@/components/icons/logo'
 import {
     bindMenu,

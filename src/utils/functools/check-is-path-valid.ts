@@ -1,4 +1,4 @@
-import CheckIsPathTaken from '@/utils/helpers/checkIsPathTaken'
+import CheckIsPathTaken from '@/utils/functools/check-is-path-taken'
 import { AliasZodString } from '@/utils/zod'
 
 export default async function CheckIsPathValid(

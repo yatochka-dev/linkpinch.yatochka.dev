@@ -1,6 +1,6 @@
-import CheckIsPathTaken from '@/utils/helpers/checkIsPathTaken'
+import CheckIsPathTaken from '@/utils/functools/check-is-path-taken'
 
-export default async function generateURLPath(pathLength = 6) {
+export default async function generatePathForShortenedUrl(pathLength = 6) {
     const characters =
         'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'
     let path = ''
@@ -9,7 +9,7 @@ export default async function generateURLPath(pathLength = 6) {
     }
 
     if (await CheckIsPathTaken(path)) {
-        return await generateURLPath()
+        return await generatePathForShortenedUrl()
     }
     return path
 }

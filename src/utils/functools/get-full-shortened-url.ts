@@ -1,7 +1,7 @@
 import { type ShortenedURL } from '@prisma/client'
 import { env } from '@/env'
 
-export default function getFullShortenedURL(
+export default function getFullShortenedUrl(
     item: ShortenedURL,
     http = false,
 ): string {

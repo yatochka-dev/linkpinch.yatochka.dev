@@ -1,9 +1,9 @@
 import { geolocation } from '@vercel/edge'
 import { redirect } from 'next/navigation'
 import { db } from '@/server/db'
-import registerClickInBackground from '@/utils/functools/registerClickInBackground'
+import registerAnalyticsUrlClick from '@/utils/functools/register-analytics-url-click'
 import { RedirectType } from 'next/dist/client/components/redirect'
-import { generateID } from '@/utils/helpers/generateURLPath'
+import { generateID } from '@/utils/functools/generate-path-for-shortened-url'
 import { kv } from '@vercel/kv'
 
 function redirectToError(code: number) {
@@ -39,7 +39,7 @@ async function GET(
                 location,
             })
             await kv.set(key, JSON.stringify({ path, ip, location }))
-            await registerClickInBackground(url, key)
+            await registerAnalyticsUrlClick(url, key)
         } catch (e) {
             console.error('Error registering click', e)
         }

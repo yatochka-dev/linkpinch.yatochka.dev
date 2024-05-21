@@ -2,11 +2,11 @@
 import auth from '@/utils/functools/auth'
 import { parseWithZod } from '@conform-to/zod'
 import { createShortenedURLSchema } from '@/server/actions/schemas/create-shortened-url-schema'
-import generateURLPath from '@/utils/helpers/generateURLPath'
+import generateURLPath from '@/utils/functools/generate-path-for-shortened-url'
 import { db } from '@/server/db'
 import { revalidatePath } from 'next/cache'
-import CheckIsPathTaken from '@/utils/helpers/checkIsPathTaken'
-import getPageTitleFromURL from '@/utils/helpers/getPageTitleFromURL'
+import CheckIsPathTaken from '@/utils/functools/check-is-path-taken'
+import getPageTitleFromURL from '@/utils/functools/get-page-title'
 
 export default async function Action_CreateShortenedURL(
     _state: unknown,

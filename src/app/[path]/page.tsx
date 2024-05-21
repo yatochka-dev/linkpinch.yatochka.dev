@@ -1,6 +1,6 @@
 import { db } from '@/server/db'
 import { redirect } from 'next/navigation'
-import registerClickInBackground from '@/utils/functools/registerClickInBackground'
+import registerAnalyticsUrlClick from '@/utils/functools/register-analytics-url-click'
 import { Box, Typography } from '@mui/material'
 import { RedirectType } from 'next/dist/client/components/redirect'
 import { headers } from 'next/headers'
@@ -24,7 +24,7 @@ export default async function ShortenedPage({
 
     if (url) {
         try {
-            await registerClickInBackground(url, JSON.stringify(h))
+            await registerAnalyticsUrlClick(url, JSON.stringify(h))
         } catch (e) {
             console.error('Error registering click', e)
         }
