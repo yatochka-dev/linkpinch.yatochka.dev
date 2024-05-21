@@ -1,6 +1,6 @@
 import React from 'react'
 import getShortenedUrl from '@/utils/functools/get-shortened-url'
-import ClientModal from '@/components/dashboard/client-modal'
+import ClientModal from '@/components/ui/dashboard/client-modal'
 import { type ShortenedLinkWithClickCount } from '@/utils/types/db'
 import { PageDialog } from '@/components/ui/page-dialog'
 

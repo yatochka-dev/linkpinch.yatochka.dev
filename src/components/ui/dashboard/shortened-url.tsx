@@ -249,6 +249,8 @@ export default function Dashboard_ShortenedURL({ data }: ShortenedURLProps) {
                                         mt: 0.7,
                                         ml: 0.5,
                                     }}
+                                    component={Link}
+                                    href={`/dashboard/${data.id}/analytics`}
                                 >
                                     {data._count.clicks} engagements
                                 </Box>
