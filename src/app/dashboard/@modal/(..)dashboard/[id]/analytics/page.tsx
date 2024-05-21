@@ -25,7 +25,15 @@ export default async function EditModal({
             clicks: true,
         },
     })
-    const devices = url.clicks.map((c) => c.metadata)
+
+    if (!url) {
+        return (
+            <PageDialog>
+                <h1>Not found</h1>
+            </PageDialog>
+        )
+    }
+    const devices = url.clicks.map((c) => c?.metadata ?? {})
     return (
         <>
             <PageDialog>
