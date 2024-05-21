@@ -5,6 +5,16 @@ import Box from '@mui/material/Box'
 import Link from 'next/link'
 import Divider from '@mui/material/Divider'
 
+interface NavLinkProps {
+    last?: boolean
+    icon?: React.ReactNode
+    href?: string
+    newTab?: boolean
+    children?: React.ReactNode
+    profile?: boolean
+    buttonProps?: ButtonProps
+}
+
 export function NavLink({
     last = false,
     icon,
@@ -13,15 +23,7 @@ export function NavLink({
     children,
     profile,
     buttonProps,
-}: {
-    last?: boolean
-    icon?: React.ReactNode
-    href?: string
-    newTab?: boolean
-    children?: React.ReactNode
-    profile?: boolean
-    buttonProps?: ButtonProps
-}) {
+}: NavLinkProps) {
     return (
         <>
             <Button
@@ -42,7 +44,7 @@ export function NavLink({
                         sx={{
                             position: 'absolute',
                             left: 0,
-                            // top: profile ? '50%' : '56%',
+                            top: profile ? '50%' : '57%',
                             transform: 'translateY(-50%)',
                             ml: 2,
                         }}
