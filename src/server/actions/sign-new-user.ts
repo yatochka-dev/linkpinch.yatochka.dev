@@ -5,14 +5,14 @@ import { db } from '@/server/db'
 import generateURLPath from '@/utils/helpers/generateURLPath'
 import auth from '@/utils/functools/auth'
 import { redirect } from 'next/navigation'
-import { newUserSchema } from '@/server/actions/schemas/new-user'
+import { signNewUserSchema } from '@/server/actions/schemas/sign-new-user-schema'
 
-export default async function Action_NewUser(
+export default async function Action_SignNewUser(
     _state: unknown,
     formData: FormData,
 ) {
     const submission = parseWithZod(formData, {
-        schema: newUserSchema,
+        schema: signNewUserSchema,
     })
 
     const session = await auth()

@@ -5,11 +5,7 @@ import { useFormStatus } from 'react-dom'
 
 type Props = ButtonProps
 
-export default function FormLoadingButton({
-    children,
-    variant,
-    ...props
-}: Props) {
+export default function PendingButton({ children, variant, ...props }: Props) {
     const { pending } = useFormStatus()
     const variantProp = variant ? variant : 'contained'
     return (

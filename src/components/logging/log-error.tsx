@@ -5,7 +5,7 @@ import { parseWithZod } from '@conform-to/zod'
 import { useForm } from '@conform-to/react'
 import { useFormState } from 'react-dom'
 import Action_LogError from '@/server/actions/log-error'
-import { logErrorSchema } from '@/server/actions/schemas/log-error'
+import { logErrorSchema } from '@/server/actions/schemas/log-error-schema'
 
 interface LogErrorProps {
     error: Error & { digest?: string }

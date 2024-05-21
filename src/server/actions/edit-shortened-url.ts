@@ -3,7 +3,7 @@ import auth from '@/utils/functools/auth'
 import { db } from '@/server/db'
 import { revalidatePath } from 'next/cache'
 import { parseWithZod } from '@conform-to/zod'
-import { editShortenedURLSchema } from '@/server/actions/schemas/edit-shortened-url'
+import { editShortenedURLSchema } from '@/server/actions/schemas/edit-shortened-url-schema'
 
 export default async function Action_EditShortenedUrl(
     _state: unknown,

@@ -1,9 +1,9 @@
 'use client'
 import React from 'react'
 import { DialogContent, DialogTitle } from '@mui/material'
-import EditShortenedURLForm from '@/components/forms/EditShortenedURLForm'
+import EditShortenedURLForm from '@/components/forms/edit-shortened-url-form'
 import { type ShortenedLinkWithClickCount } from '@/utils/types/dbHelper'
-import { PageDialog } from '@/components/ui/PageDialog'
+import { PageDialog } from '@/components/ui/page-dialog'
 
 interface ClientModalProps {
     data: ShortenedLinkWithClickCount

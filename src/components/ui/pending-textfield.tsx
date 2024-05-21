@@ -4,7 +4,7 @@ import { useFormStatus } from 'react-dom'
 
 type Props = TextFieldProps
 
-export default function FormDisablingTextField({ children, ...props }: Props) {
+export default function PendingTextfield({ children, ...props }: Props) {
     const { pending } = useFormStatus()
 
     return (

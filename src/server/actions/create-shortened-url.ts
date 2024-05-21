@@ -1,21 +1,21 @@
 'use server'
 import auth from '@/utils/functools/auth'
 import { parseWithZod } from '@conform-to/zod'
-import { shortenUrlSchema } from '@/server/actions/schemas/shorten-url'
+import { createShortenedURLSchema } from '@/server/actions/schemas/create-shortened-url-schema'
 import generateURLPath from '@/utils/helpers/generateURLPath'
 import { db } from '@/server/db'
 import { revalidatePath } from 'next/cache'
 import CheckIsPathTaken from '@/utils/helpers/checkIsPathTaken'
 import getPageTitleFromURL from '@/utils/helpers/getPageTitleFromURL'
 
-export default async function Action_ShortenUrl(
+export default async function Action_CreateShortenedURL(
     _state: unknown,
     formData: FormData,
 ) {
     const session = await auth()
 
     const submission = parseWithZod(formData, {
-        schema: shortenUrlSchema,
+        schema: createShortenedURLSchema,
     })
 
     if (submission.status !== 'success') {

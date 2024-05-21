@@ -1,5 +1,5 @@
 import { z } from 'zod'
 
-export const newUserSchema = z.object({
+export const signNewUserSchema = z.object({
     url: z.string().url(),
 })

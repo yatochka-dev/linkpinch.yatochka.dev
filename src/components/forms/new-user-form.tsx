@@ -3,15 +3,15 @@ import { Box, Paper, Typography } from '@mui/material'
 import React from 'react'
 import { useFormState } from 'react-dom'
 
-import Action_NewUser from '@/server/actions/newUser'
+import Action_SignNewUser from '@/server/actions/sign-new-user'
 import { useForm } from '@conform-to/react'
 import { parseWithZod } from '@conform-to/zod'
-import { newUserSchema } from '@/server/actions/schemas/new-user'
-import FormLoadingButton from '@/components/ui/FormLoadingButton'
-import FormDisablingTextField from '@/components/ui/FormDisablingTextField'
+import { signNewUserSchema } from '@/server/actions/schemas/sign-new-user-schema'
+import PendingButton from '@/components/ui/pending-button'
+import PendingTextfield from '@/components/ui/pending-textfield'
 
 function NewUserForm() {
-    const [lastResult, dispatch] = useFormState(Action_NewUser, undefined)
+    const [lastResult, dispatch] = useFormState(Action_SignNewUser, undefined)
 
     const [form, fields] = useForm({
         // Sync the result of last submission
@@ -19,7 +19,7 @@ function NewUserForm() {
 
         // Reuse the validation logic on the client
         onValidate({ formData }) {
-            return parseWithZod(formData, { schema: newUserSchema })
+            return parseWithZod(formData, { schema: signNewUserSchema })
         },
 
         // Validate the form on blur event triggered
@@ -55,7 +55,7 @@ function NewUserForm() {
                         : 'Shorten your first link!'}
                 </Typography>
 
-                <FormDisablingTextField
+                <PendingTextfield
                     // type={"url"}
                     label={'Link'}
                     placeholder={'https://example.com'}
@@ -69,7 +69,7 @@ function NewUserForm() {
                             : 'Enter a valid URL'
                     }
                 />
-                <FormLoadingButton
+                <PendingButton
                     sx={{
                         mt: 2,
                         fontFamily: 'Poppins, sans-serif',
@@ -79,7 +79,7 @@ function NewUserForm() {
                     variant={'contained'}
                 >
                     Shorten
-                </FormLoadingButton>
+                </PendingButton>
             </Paper>
         </Box>
     )

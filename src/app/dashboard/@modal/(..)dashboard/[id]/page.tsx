@@ -1,8 +1,8 @@
 import React from 'react'
 import getShortenedLinkByID from '@/utils/functools/getShortenedLinkByID'
-import ClientModal from '@/app/dashboard/@modal/(..)dashboard/[id]/Client'
+import ClientModal from '@/components/dashboard/client-modal'
 import { type ShortenedLinkWithClickCount } from '@/utils/types/dbHelper'
-import { PageDialog } from '@/components/ui/PageDialog'
+import { PageDialog } from '@/components/ui/page-dialog'
 
 export default async function EditModal({
     params,

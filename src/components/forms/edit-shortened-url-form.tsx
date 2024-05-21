@@ -3,19 +3,19 @@
 import { type ShortenedURL } from '@prisma/client'
 import React, { useState } from 'react'
 import { Box, TextField } from '@mui/material'
-import { CustomAliasInput } from '@/components/ui/CustomAliasInput'
-import FormDisablingTextField from '@/components/ui/FormDisablingTextField'
-import FormLoadingButton from '@/components/ui/FormLoadingButton'
-// import { GoBackToDashboard } from '@/components/ui/GoBackToDashboard'
+import { CustomAliasInput } from '@/components/ui/dashboard/custom-alias-input'
+import PendingTextfield from '@/components/ui/pending-textfield'
+import PendingButton from '@/components/ui/pending-button'
+// import { GoBackToDashboardButton } from '@/components/ui/GoBackToDashboardButton'
 import dynamic from 'next/dynamic'
-import Action_EditShortenedUrl from '@/server/actions/editShortenedUrl'
+import Action_EditShortenedUrl from '@/server/actions/edit-shortened-url'
 import { useFormState } from 'react-dom'
 import { useForm } from '@conform-to/react'
-import { editShortenedURLSchema } from '@/server/actions/schemas/edit-shortened-url'
+import { editShortenedURLSchema } from '@/server/actions/schemas/edit-shortened-url-schema'
 import { parseWithZod } from '@conform-to/zod'
 
 const GoBackToDashboard = dynamic(
-    () => import('@/components/ui/GoBackToDashboard'),
+    () => import('@/components/ui/dashboard/go-back-to-dashboard-button'),
 )
 
 interface EditShortenedURLFormProps {
@@ -77,7 +77,7 @@ export default function EditShortenedURLForm({
                 noValidate
             >
                 {page && <GoBackToDashboard />}
-                <FormDisablingTextField
+                <PendingTextfield
                     fullWidth
                     label={'Title'}
                     variant={'outlined'}
@@ -91,7 +91,7 @@ export default function EditShortenedURLForm({
                     name={fields.title.name}
                     defaultValue={data.title ?? ''}
                 />
-                <FormDisablingTextField
+                <PendingTextfield
                     fullWidth
                     label={'URL'}
                     variant={'outlined'}
@@ -126,12 +126,12 @@ export default function EditShortenedURLForm({
                     sx={{ display: 'none' }}
                 ></TextField>
 
-                <FormLoadingButton
+                <PendingButton
                     type={'submit'}
                     disabled={alias === '' ? false : !aliasIsOk || pending}
                 >
                     Save
-                </FormLoadingButton>
+                </PendingButton>
             </Box>
         </Box>
     )

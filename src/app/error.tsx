@@ -5,7 +5,7 @@ import React, { useCallback } from 'react'
 import copyToClipboard from '@/utils/helpers/copyToClipboard'
 import { toast } from 'react-hot-toast'
 import { Box, Typography } from '@mui/material'
-import LogError from '@/components/logging/LogError'
+import LogError from '@/components/logging/log-error'
 
 export default function Error({
     error,

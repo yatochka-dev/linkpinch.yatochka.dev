@@ -1,4 +1,4 @@
-import FormDisablingTextField from '@/components/ui/FormDisablingTextField'
+import PendingTextfield from '@/components/ui/pending-textfield'
 import { Box, InputAdornment, TextFieldProps } from '@mui/material'
 import React, { useEffect, useMemo, useState } from 'react'
 import debounce from '@/utils/helpers/debounce'
@@ -61,7 +61,7 @@ export function CustomAliasInput({
     }, [aliasIsOk, onChange, pending, alias])
 
     return (
-        <FormDisablingTextField
+        <PendingTextfield
             fullWidth
             value={alias}
             {...TextInputProps}

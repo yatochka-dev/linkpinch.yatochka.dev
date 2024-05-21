@@ -16,7 +16,7 @@ import useResponsive from '@/utils/hooks/useResponsive'
 import Link from 'next/link'
 import { type Session } from 'next-auth'
 import { getDefaultAvatar } from '@/utils/functools/getDefaultAvatar'
-import Logo from '@/components/icons/Logo'
+import Logo from '@/components/icons/logo'
 import {
     bindMenu,
     bindTrigger,
@@ -24,9 +24,9 @@ import {
 } from 'material-ui-popup-state/hooks'
 import React, { useCallback, useMemo, useState } from 'react'
 import { signOut } from 'next-auth/react'
-import { NavLink } from '@/components/ui/NavLink'
+import { NavLink } from '@/components/ui/SideNavbarLink'
 
-export default function Nav({ session }: { session: Session | null }) {
+export default function SideNavbar({ session }: { session: Session | null }) {
     const width = useResponsive({}, '220px')
     const type = useResponsive<'persistent' | 'temporary'>(
         {

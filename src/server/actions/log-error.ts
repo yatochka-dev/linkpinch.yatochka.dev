@@ -1,7 +1,7 @@
 'use server'
 
 import { parseWithZod } from '@conform-to/zod'
-import { logErrorSchema } from '@/server/actions/schemas/log-error'
+import { logErrorSchema } from '@/server/actions/schemas/log-error-schema'
 
 export default async function Action_LogError(
     _state: unknown,

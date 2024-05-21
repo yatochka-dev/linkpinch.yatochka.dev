@@ -1,17 +1,20 @@
 'use client'
 import React, { useEffect, useState } from 'react'
 import { Box, Paper, Typography } from '@mui/material'
-import FormLoadingButton from '@/components/ui/FormLoadingButton'
+import PendingButton from '@/components/ui/pending-button'
 import { useFormState } from 'react-dom'
-import Action_ShortenUrl from '@/server/actions/shortenUrl'
-import { CustomAliasInput } from '@/components/ui/CustomAliasInput'
-import FormDisablingTextField from '@/components/ui/FormDisablingTextField'
+import Action_CreateShortenedURL from '@/server/actions/create-shortened-url'
+import { CustomAliasInput } from '@/components/ui/dashboard/custom-alias-input'
+import PendingTextfield from '@/components/ui/pending-textfield'
 import { parseWithZod } from '@conform-to/zod'
 import { useForm } from '@conform-to/react'
-import { shortenUrlSchema } from '@/server/actions/schemas/shorten-url'
+import { createShortenedURLSchema } from '@/server/actions/schemas/create-shortened-url-schema'
 
 export default function CreateShortenedURLForm() {
-    const [lastResult, dispatch] = useFormState(Action_ShortenUrl, undefined)
+    const [lastResult, dispatch] = useFormState(
+        Action_CreateShortenedURL,
+        undefined,
+    )
 
     const [form, fields] = useForm({
         // Sync the result of last submission
@@ -19,7 +22,7 @@ export default function CreateShortenedURLForm() {
 
         // Reuse the validation logic on the client
         onValidate({ formData }) {
-            return parseWithZod(formData, { schema: shortenUrlSchema })
+            return parseWithZod(formData, { schema: createShortenedURLSchema })
         },
 
         // Validate the form on blur event triggered
@@ -61,7 +64,7 @@ export default function CreateShortenedURLForm() {
                     onSubmit={form.onSubmit}
                     noValidate
                 >
-                    <FormDisablingTextField
+                    <PendingTextfield
                         fullWidth
                         label={'URL'}
                         variant={'outlined'}
@@ -90,12 +93,12 @@ export default function CreateShortenedURLForm() {
                         }}
                     />
 
-                    <FormLoadingButton
+                    <PendingButton
                         type={'submit'}
                         disabled={alias === '' ? false : !aliasIsOk || pending}
                     >
                         Save
-                    </FormLoadingButton>
+                    </PendingButton>
                 </Box>
             </Paper>
         </Box>

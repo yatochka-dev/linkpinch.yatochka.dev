@@ -12,13 +12,13 @@ import CalendarTodayIcon from '@mui/icons-material/CalendarToday'
 import copyToClipboard from '@/utils/helpers/copyToClipboard'
 import { toast } from 'react-hot-toast'
 import DeleteIcon from '@mui/icons-material/Delete'
-import { deleteShortenedURL } from '@/server/actions/delete-shortened-url'
+import { Action_DeleteShortenedURL } from '@/server/actions/delete-shortened-url'
 import { useFormState } from 'react-dom'
 import { useForm } from '@conform-to/react'
 import { parseWithZod } from '@conform-to/zod'
-import { deleteShortenedURLSchema } from '@/server/actions/schemas/delete-shortened-url'
+import { deleteShortenedURLSchema } from '@/server/actions/schemas/delete-shortened-url-schema'
 import useResponsive from '@/utils/hooks/useResponsive'
-import FormLoadingButton from '@/components/ui/FormLoadingButton'
+import PendingButton from '@/components/ui/pending-button'
 
 interface ShortenedURLProps {
     data: ShortenedURL & {
@@ -43,7 +43,10 @@ function ShortenedURLActions({
         })
     }, [data])
 
-    const [lastResult, action] = useFormState(deleteShortenedURL, undefined)
+    const [lastResult, action] = useFormState(
+        Action_DeleteShortenedURL,
+        undefined,
+    )
     const [form, fields] = useForm({
         // Sync the result of last submission
         lastResult,
@@ -67,7 +70,7 @@ function ShortenedURLActions({
                     alignItems: 'flex-start',
                 }}
             >
-                <FormLoadingButton
+                <PendingButton
                     startIcon={<ContentCopyIcon />}
                     size={'small'}
                     variant={'outlined'}
@@ -81,9 +84,9 @@ function ShortenedURLActions({
                     >
                         Copy
                     </Box>
-                </FormLoadingButton>
+                </PendingButton>
 
-                <FormLoadingButton
+                <PendingButton
                     size={'small'}
                     variant={'text'}
                     sx={{
@@ -93,10 +96,10 @@ function ShortenedURLActions({
                     href={`/dashboard/${data.id}`}
                 >
                     <EditIcon />
-                </FormLoadingButton>
+                </PendingButton>
 
                 <input type={'hidden'} name={fields.id.name} value={data.id} />
-                <FormLoadingButton
+                <PendingButton
                     size={'small'}
                     variant={'text'}
                     sx={{
@@ -107,7 +110,7 @@ function ShortenedURLActions({
                     // href={`/dashboard/${data.id}`}
                 >
                     <DeleteIcon />
-                </FormLoadingButton>
+                </PendingButton>
             </Box>
         </form>
     )
