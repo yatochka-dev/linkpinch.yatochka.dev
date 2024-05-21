@@ -24,7 +24,7 @@ import {
 } from 'material-ui-popup-state/hooks'
 import React, { useCallback, useMemo, useState } from 'react'
 import { signOut } from 'next-auth/react'
-import { NavLink } from '@/components/ui/SideNavbarLink'
+import SideNavbarLink from '@/components/ui/navigation/side-navbar-link'
 
 export default function SideNavbar({ session }: { session: Session | null }) {
     const width = useResponsive({}, '220px')
@@ -135,13 +135,13 @@ export default function SideNavbar({ session }: { session: Session | null }) {
                     }}
                 >
                     {loggedIn && (
-                        <NavLink
+                        <SideNavbarLink
                             href={'/dashboard'}
                             last
                             icon={<FeaturedPlayListIcon />}
                         >
                             Dashboard
-                        </NavLink>
+                        </SideNavbarLink>
                     )}
                     <Box flexGrow={0.5} />
                     {!loggedIn && (
@@ -154,10 +154,12 @@ export default function SideNavbar({ session }: { session: Session | null }) {
                         </Typography>
                     )}
                     <Box flexGrow={1} />
-                    {!loggedIn && <NavLink href={'/login'}>Login</NavLink>}
+                    {!loggedIn && (
+                        <SideNavbarLink href={'/login'}>Login</SideNavbarLink>
+                    )}
                     {loggedIn && (
                         <>
-                            <NavLink
+                            <SideNavbarLink
                                 buttonProps={bindTrigger(popupState)}
                                 profile
                                 last
@@ -175,7 +177,7 @@ export default function SideNavbar({ session }: { session: Session | null }) {
                                 }
                             >
                                 Profile
-                            </NavLink>
+                            </SideNavbarLink>
                             <Menu
                                 {...bindMenu(popupState)}
                                 anchorOrigin={{

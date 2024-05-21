@@ -11,15 +11,12 @@ export default async function getPageTitle(
                 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/125.0.0.0 Safari/537.3',
         },
     })
-    console.log(response.ok)
 
     if (!response.ok) {
         return undefined
     }
 
     const text = await response.text()
-    console.log(response.status)
-    console.log(text)
 
     if (!text) {
         return undefined

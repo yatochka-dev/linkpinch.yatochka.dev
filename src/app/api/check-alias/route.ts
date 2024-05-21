@@ -1,4 +1,4 @@
-import CheckIsPathValid from '@/utils/helpers/checkIsPathValid'
+import CheckIsPathValid from '@/utils/functools/check-is-path-valid'
 
 export const dynamic = 'force-dynamic' // defaults to auto
 export async function GET(request: Request) {

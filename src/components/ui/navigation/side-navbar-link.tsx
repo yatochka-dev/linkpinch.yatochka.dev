@@ -15,7 +15,7 @@ interface NavLinkProps {
     buttonProps?: ButtonProps
 }
 
-export function SideNavbarLink({
+export default function SideNavbarLink({
     last = false,
     icon,
     href,

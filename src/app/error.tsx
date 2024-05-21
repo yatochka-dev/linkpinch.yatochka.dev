@@ -2,7 +2,7 @@
 
 import Button from '@mui/material/Button'
 import React, { useCallback } from 'react'
-import copyToClipboard from '@/utils/helpers/copyToClipboard'
+import copyToClipboard from '@/utils/functools/copy-to-clipboard'
 import { toast } from 'react-hot-toast'
 import { Box, Typography } from '@mui/material'
 import LogError from '@/components/logging/log-error'
