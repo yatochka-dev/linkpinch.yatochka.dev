@@ -3,7 +3,7 @@ import { redirect } from 'next/navigation'
 import registerClickInBackground from '@/utils/functools/registerClickInBackground'
 import { Box, Typography } from '@mui/material'
 import { RedirectType } from 'next/dist/client/components/redirect'
-import { cookies, headers } from 'next/headers'
+import { headers } from 'next/headers'
 
 export default async function ShortenedPage({
     params,
@@ -13,9 +13,6 @@ export default async function ShortenedPage({
     }
 }) {
     const h = headers()
-    const c = cookies()
-    // console.dir(h)
-    // console.dir(c)
 
     const path = params.path
 

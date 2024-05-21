@@ -4,7 +4,8 @@ import Button from '@mui/material/Button'
 import React, { useCallback } from 'react'
 import copyToClipboard from '@/utils/helpers/copyToClipboard'
 import { toast } from 'react-hot-toast'
-import { Box } from '@mui/material'
+import { Box, Typography } from '@mui/material'
+import LogError from '@/components/logging/LogError'
 
 export default function Error({
     error,
@@ -41,14 +42,24 @@ export default function Error({
             <Box
                 sx={{
                     width: '100%',
-                    display: 'flex',
-                    p: 4,
+                    // p: 4,
+                    px: 2,
+                    pt: '15dvh',
+                    pb: 2,
                     gap: 2,
+                    display: 'flex',
+                    flexDirection: 'column',
+                    justifyContent: 'center',
                 }}
             >
-                <Button onClick={handleCopy} variant={'outlined'}>
-                    COPY TO CLIPBOARD
-                </Button>
+                <Typography variant={'h4'}>
+                    Something went wrong. Please try again.
+                </Typography>
+                <Typography variant={'body1'} color={'text.secondary'}>
+                    The error has already been reported to our team. And you can
+                    be sure that we are working hard to fix it. (nah {"we're"}{' '}
+                    not)
+                </Typography>
                 <Button
                     onClick={
                         // Attempt to recover by trying to re-render the segment
@@ -59,12 +70,7 @@ export default function Error({
                 </Button>
             </Box>
 
-            <h2>MSG: {error.message}</h2>
-            <h2>STACK: {error.stack}</h2>
-            <h2>NAME: {error.name}</h2>
-            <h2>TO STRING: {error.toString()}</h2>
-            <h2>CAUSE: {JSON.stringify(error.cause)}</h2>
-            <h2>DIGEST: {error.digest}</h2>
+            <LogError error={error} />
         </div>
     )
 }
