@@ -6,6 +6,8 @@ import { RedirectType } from 'next/dist/client/components/redirect'
 import { generateID } from '@/utils/functools/generate-path-for-shortened-url'
 import { kv } from '@vercel/kv'
 import getDeviceFromHeaders from '@/utils/functools/get-device-from-headers'
+import { clickEventCronJobListName } from '@/utils/const'
+import { ClickEvent } from '@/utils/types/cron'
 
 function redirectToError(code: number) {
     redirect(`/not-found-page/${code}`)
@@ -29,14 +31,22 @@ async function GET(
 
     if (url) {
         try {
+            const ip = req.headers.get('x-forwarded-for') ?? '::1'
             const location = geolocation(req)
             const generatedID = await generateID(22)
-
-            const ip = req.headers.get('x-forwarded-for')
-            const key = `cronjob-linkpinch-${generatedID}`
             const device = getDeviceFromHeaders(req.headers)
-            const m = { path, ip, location, device }
+
+            const key = `cronjob-linkpinch-${generatedID}`
+            const m = {
+                id: url.id,
+                ip,
+                geo: location,
+                device,
+                timestamp: new Date().toISOString(),
+            } satisfies ClickEvent
             console.log('cronjob-linkpinch', generatedID, m)
+
+            await kv.lpush(clickEventCronJobListName, JSON.stringify(m))
 
             await kv.set(key, JSON.stringify(m))
             await registerAnalyticsUrlClick(url, key)

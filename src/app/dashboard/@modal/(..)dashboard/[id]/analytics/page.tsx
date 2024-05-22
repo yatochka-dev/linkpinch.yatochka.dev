@@ -3,7 +3,7 @@ import { PageDialog } from '@/components/ui/page-dialog'
 import { Box, Typography } from '@mui/material'
 import { db } from '@/server/db'
 
-export default async function EditModal({
+export default async function AnalyticsModal({
     params,
 }: {
     params: {
