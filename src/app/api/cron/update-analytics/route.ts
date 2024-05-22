@@ -4,7 +4,9 @@ import { clickEventCronJobListName } from '@/utils/const'
 import { db } from '@/server/db'
 import { type ClickEvent } from '@/utils/types/cron'
 
-export async function POST() {
+export const dynamic = 'force-dynamic'
+
+export async function GET() {
     const d = await kv.rpop<ClickEvent[]>(clickEventCronJobListName, 5000)
     console.log(d)
     if (!d) {
