@@ -1,4 +1,4 @@
-import { PageDialog } from '@/components/ui/PageDialog'
+import { PageDialog } from '@/components/ui/page-dialog'
 import { Box, CircularProgress } from '@mui/material'
 
 export default function EditURLLoading() {

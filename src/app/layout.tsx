@@ -6,9 +6,8 @@ import { Toaster } from 'react-hot-toast'
 import { ThemeProvider } from '@mui/material/styles'
 import theme from '../theme'
 import { Container, CssBaseline } from '@mui/material'
-import Nav from '@/components/ui/nav'
+import SideNavbar from '@/components/ui/navigation/side-navbar'
 import Box from '@mui/material/Box'
-import auth from '@/utils/functools/auth'
 import { getServerAuthSession } from '@/server/auth'
 
 export const metadata = {
@@ -47,7 +46,7 @@ export default async function RootLayout({
                     >
                         <Toaster position={'bottom-right'} toastOptions={{}} />
 
-                        <Nav session={session} />
+                        <SideNavbar session={session} />
 
                         <Container
                             sx={{

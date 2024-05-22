@@ -1,4 +1,4 @@
-import EditShortenedURLForm from '@/components/forms/EditShortenedURLForm'
+import EditShortenedURLForm from '@/components/forms/edit-shortened-url-form'
 import { db } from '@/server/db'
 
 export default async function EditShortenedURLPage({

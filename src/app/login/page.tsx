@@ -1,8 +1,8 @@
-import LoginForm from '@/components/forms/LoginForm'
-import protectFromLogged from '@/utils/functools/protectFromLogged'
+import LoginForm from '@/components/forms/login-form'
+import redirectLoggedIn from '@/utils/functools/redirect-logged-in'
 
 export default async function LoginPage() {
-    await protectFromLogged()
+    await redirectLoggedIn()
 
     return <LoginForm />
 }

@@ -1,8 +1,8 @@
 import { Box } from '@mui/material'
-import CreateShortenedURLForm from '@/components/forms/CreateShortenedURLForm'
+import CreateShortenedURLForm from '@/components/forms/create-shortened-url-form'
 import auth from '@/utils/functools/auth'
 import { db } from '@/server/db'
-import Dashboard_ShortenedURL from '@/components/ui/dashboard/ShortenedURL'
+import Dashboard_ShortenedURL from '@/components/ui/dashboard/shortened-url'
 import RefreshPage from '@/components/NextJSPleaseFixThat/refresh-page'
 
 export const dynamic = 'force-dynamic'

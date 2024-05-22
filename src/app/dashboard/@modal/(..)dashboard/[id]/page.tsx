@@ -1,8 +1,8 @@
 import React from 'react'
-import getShortenedLinkByID from '@/utils/functools/getShortenedLinkByID'
-import ClientModal from '@/app/dashboard/@modal/(..)dashboard/[id]/Client'
-import { type ShortenedLinkWithClickCount } from '@/utils/types/dbHelper'
-import { PageDialog } from '@/components/ui/PageDialog'
+import getShortenedUrl from '@/utils/functools/get-shortened-url'
+import ClientModal from '@/components/ui/dashboard/client-modal'
+import { type ShortenedLinkWithClickCount } from '@/utils/types/db'
+import { PageDialog } from '@/components/ui/page-dialog'
 
 export default async function EditModal({
     params,
@@ -14,7 +14,7 @@ export default async function EditModal({
     // simulate loading
     // await new Promise((resolve) => setTimeout(resolve, 5000))
 
-    const data = (await getShortenedLinkByID(
+    const data = (await getShortenedUrl(
         params.id,
         true,
     )) as ShortenedLinkWithClickCount
