@@ -8,10 +8,6 @@ import { unstable_after as after } from 'next/server'
 import { type ShortenedURL } from '@prisma/client'
 import { cache } from 'react'
 
-function redirectToError(code: number) {
-    redirect(`/not-found-page/${code}`)
-}
-
 function getClickEventMetadata(req: Request, url: ShortenedURL) {
     const ip = req.headers.get('x-forwarded-for') ?? '::1'
     const location = geolocation(req)
