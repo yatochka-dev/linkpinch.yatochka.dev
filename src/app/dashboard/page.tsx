@@ -3,10 +3,9 @@ import CreateShortenedURLForm from '@/components/forms/create-shortened-url-form
 import auth from '@/utils/functools/auth'
 import { db } from '@/server/db'
 import Dashboard_ShortenedURL from '@/components/ui/dashboard/shortened-url'
-import RefreshPage from '@/components/NextJSPleaseFixThat/refresh-page'
-
-export const dynamic = 'force-dynamic'
-export const revalidate = 0
+import { revalidatePath } from 'next/cache'
+import PendingButton from '@/components/ui/pending-button'
+import RefreshIcon from '@mui/icons-material/Refresh'
 
 export default async function DashboardPage() {
     // das a workaround so the page dynamically renders every time, I need no caching for a damn dashboard
@@ -31,6 +30,11 @@ export default async function DashboardPage() {
         },
     })
 
+    const revalidatePage = async () => {
+        'use server'
+        revalidatePath('/dashboard', 'page')
+    }
+
     return (
         <Box>
             {/*<Box*/}
@@ -43,11 +47,22 @@ export default async function DashboardPage() {
             {/*></Box>*/}
             <CreateShortenedURLForm />
             <Box
+                component={'form'}
+                action={revalidatePage}
+                sx={{
+                    mt: 8,
+                    px: 1,
+                }}
+            >
+                <PendingButton type={'submit'} startIcon={<RefreshIcon />}>
+                    Refresh
+                </PendingButton>
+            </Box>
+            <Box
                 sx={{
                     py: 4,
                 }}
             >
-                <RefreshPage />
                 {items.map((item) => (
                     <Dashboard_ShortenedURL
                         key={`${item.id}-dashboard-shortened-url-item`}
