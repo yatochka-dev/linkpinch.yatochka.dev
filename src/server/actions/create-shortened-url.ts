@@ -40,7 +40,9 @@ export default async function Action_CreateShortenedURL(
             ? await generateURLPath()
             : submission.value.alias
 
-    const title = await getPageTitleFromURL(submission.value.url)
+    const title = !!submission.value.title
+        ? submission.value.title
+        : await getPageTitleFromURL(submission.value.url)
 
     await db.shortenedURL.create({
         data: {

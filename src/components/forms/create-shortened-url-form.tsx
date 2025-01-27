@@ -1,8 +1,7 @@
 'use client'
-import React, { useEffect, useState } from 'react'
+import React, { useActionState, useEffect, useState } from 'react'
 import { Box, Paper, Typography } from '@mui/material'
 import PendingButton from '@/components/ui/pending-button'
-import { useFormState } from 'react-dom'
 import Action_CreateShortenedURL from '@/server/actions/create-shortened-url'
 import { CustomAliasInput } from '@/components/ui/dashboard/custom-alias-input'
 import PendingTextfield from '@/components/ui/pending-textfield'
@@ -11,7 +10,7 @@ import { useForm } from '@conform-to/react'
 import { createShortenedURLSchema } from '@/server/actions/schemas/create-shortened-url-schema'
 
 export default function CreateShortenedURLForm() {
-    const [lastResult, dispatch] = useFormState(
+    const [lastResult, dispatch] = useActionState(
         Action_CreateShortenedURL,
         undefined,
     )
@@ -64,6 +63,19 @@ export default function CreateShortenedURLForm() {
                     onSubmit={form.onSubmit}
                     noValidate
                 >
+                    <PendingTextfield
+                        fullWidth
+                        label={'Custom Title (optional)'}
+                        variant={'outlined'}
+                        helperText={
+                            !!fields.title.errors
+                                ? fields.title.errors
+                                : 'Enter the URL you want to shorten'
+                        }
+                        error={!!fields.title.errors}
+                        name={fields.title.name}
+                    />
+
                     <PendingTextfield
                         fullWidth
                         label={'URL'}

@@ -1,9 +1,9 @@
-export default function ErrorRedirection({
+export default async function ErrorRedirection({
     params,
 }: {
-    params: {
+    params: Promise<{
         code: string
-    }
+    }>
 }) {
-    return <h1>{params.code}</h1>
+    return <h1>{(await params).code}</h1>
 }

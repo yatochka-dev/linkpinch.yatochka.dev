@@ -1,7 +1,7 @@
 'use client'
 
 import { type ShortenedURL } from '@prisma/client'
-import React, { useState } from 'react'
+import React, { useActionState, useState } from 'react'
 import { Box, TextField } from '@mui/material'
 import { CustomAliasInput } from '@/components/ui/dashboard/custom-alias-input'
 import PendingTextfield from '@/components/ui/pending-textfield'
@@ -9,7 +9,6 @@ import PendingButton from '@/components/ui/pending-button'
 // import { GoBackToDashboardButton } from '@/components/ui/GoBackToDashboardButton'
 import dynamic from 'next/dynamic'
 import Action_EditShortenedUrl from '@/server/actions/edit-shortened-url'
-import { useFormState } from 'react-dom'
 import { useForm } from '@conform-to/react'
 import { editShortenedURLSchema } from '@/server/actions/schemas/edit-shortened-url-schema'
 import { parseWithZod } from '@conform-to/zod'
@@ -35,7 +34,7 @@ export default function EditShortenedURLForm({
     const [pending, setPending] = useState(false)
     const [aliasIsOk, setAliasIsOk] = useState(true)
 
-    const [lastResult, dispatch] = useFormState(
+    const [lastResult, dispatch] = useActionState(
         Action_EditShortenedUrl,
         undefined,
     )
@@ -70,6 +69,7 @@ export default function EditShortenedURLForm({
                     display: 'flex',
                     flexDirection: 'column',
                     gap: 2,
+                    py: 1,
                 }}
                 id={form.id}
                 onSubmit={form.onSubmit}

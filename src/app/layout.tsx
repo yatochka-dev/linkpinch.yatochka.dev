@@ -9,6 +9,7 @@ import { Container, CssBaseline } from '@mui/material'
 import SideNavbar from '@/components/ui/navigation/side-navbar'
 import Box from '@mui/material/Box'
 import { getServerAuthSession } from '@/server/auth'
+import React from 'react'
 
 export const metadata = {
     title: 'LinkPinch',

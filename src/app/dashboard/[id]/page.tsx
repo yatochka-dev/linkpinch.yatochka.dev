@@ -4,13 +4,13 @@ import { db } from '@/server/db'
 export default async function EditShortenedURLPage({
     params,
 }: {
-    params: {
+    params: Promise<{
         id: string
-    }
+    }>
 }) {
     const item = await db.shortenedURL.findUnique({
         where: {
-            id: params.id,
+            id: (await params).id,
         },
         include: {
             _count: {

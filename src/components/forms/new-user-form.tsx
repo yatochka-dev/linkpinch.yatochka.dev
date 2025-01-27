@@ -1,7 +1,6 @@
 'use client'
 import { Box, Paper, Typography } from '@mui/material'
-import React from 'react'
-import { useFormState } from 'react-dom'
+import React, { useActionState } from 'react'
 
 import Action_SignNewUser from '@/server/actions/sign-new-user'
 import { useForm } from '@conform-to/react'
@@ -11,7 +10,7 @@ import PendingButton from '@/components/ui/pending-button'
 import PendingTextfield from '@/components/ui/pending-textfield'
 
 function NewUserForm() {
-    const [lastResult, dispatch] = useFormState(Action_SignNewUser, undefined)
+    const [lastResult, dispatch] = useActionState(Action_SignNewUser, undefined)
 
     const [form, fields] = useForm({
         // Sync the result of last submission

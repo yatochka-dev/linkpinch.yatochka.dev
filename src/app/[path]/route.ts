@@ -1,10 +1,9 @@
 import { geolocation } from '@vercel/edge'
-import { notFound, redirect } from 'next/navigation'
+import { notFound, redirect, RedirectType } from 'next/navigation'
 import { db } from '@/server/db'
-import { RedirectType } from 'next/dist/client/components/redirect'
 import getDeviceFromHeaders from '@/utils/functools/get-device-from-headers'
 import { type ClickEvent } from '@/utils/types/cron'
-import { unstable_after as after } from 'next/server'
+import { after } from 'next/server'
 import { type ShortenedURL } from '@prisma/client'
 import { cache } from 'react'
 
@@ -24,14 +23,12 @@ function getClickEventMetadata(req: Request, url: ShortenedURL) {
 
 async function GET(
     req: Request,
-    {
-        params: { path },
-    }: {
-        params: {
-            path: string
-        }
+    context: {
+        params: Promise<{ path: string }>
     },
 ) {
+    const { path } = await context.params
+
     const url = await db.shortenedURL.findUnique({
         where: {
             path,
@@ -47,10 +44,6 @@ async function GET(
                     data: {
                         urlId: url.id,
                         metadata: m,
-                        // ip,
-                        // geo: location,
-                        // device,
-                        // timestamp,
                     },
                 })
             }
