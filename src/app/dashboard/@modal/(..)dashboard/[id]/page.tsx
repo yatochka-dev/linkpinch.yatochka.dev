@@ -7,15 +7,15 @@ import { PageDialog } from '@/components/ui/page-dialog'
 export default async function EditModal({
     params,
 }: {
-    params: {
+    params: Promise<{
         id: string
-    }
+    }>
 }) {
     // simulate loading
     // await new Promise((resolve) => setTimeout(resolve, 5000))
 
     const data = (await getShortenedUrl(
-        params.id,
+        (await params).id,
         true,
     )) as ShortenedLinkWithClickCount
 

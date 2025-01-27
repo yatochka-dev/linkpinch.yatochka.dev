@@ -23,14 +23,12 @@ function getClickEventMetadata(req: Request, url: ShortenedURL) {
 
 async function GET(
     req: Request,
-    {
-        params: { path },
-    }: {
-        params: {
-            path: string
-        }
+    context: {
+        params: Promise<{ path: string }>
     },
 ) {
+    const { path } = await context.params
+
     const url = await db.shortenedURL.findUnique({
         where: {
             path,
@@ -46,10 +44,6 @@ async function GET(
                     data: {
                         urlId: url.id,
                         metadata: m,
-                        // ip,
-                        // geo: location,
-                        // device,
-                        // timestamp,
                     },
                 })
             }

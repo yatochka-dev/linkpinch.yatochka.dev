@@ -6,9 +6,7 @@ import { db } from '@/server/db'
 export default async function AnalyticsModal({
     params,
 }: {
-    params: {
-        id: string
-    }
+    params: Promise<{ id: string }>
 }) {
     // simulate loading
     // await new Promise((resolve) => setTimeout(resolve, 5000))
@@ -19,7 +17,7 @@ export default async function AnalyticsModal({
     // )) as ShortenedLinkWithClickCount
     const url = await db.shortenedURL.findUnique({
         where: {
-            id: params.id,
+            id: (await params).id,
         },
         include: {
             clicks: true,
