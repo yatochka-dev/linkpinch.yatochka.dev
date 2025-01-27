@@ -1,5 +1,5 @@
 'use client'
-import React, { useCallback } from 'react'
+import React, { useActionState, useCallback } from 'react'
 import { type ShortenedURL } from '@prisma/client'
 import { Avatar, Box, Paper, Tooltip, Typography } from '@mui/material'
 import Link from 'next/link'
@@ -13,7 +13,6 @@ import copyToClipboard from '@/utils/functools/copy-to-clipboard'
 import { toast } from 'react-hot-toast'
 import DeleteIcon from '@mui/icons-material/Delete'
 import { Action_DeleteShortenedURL } from '@/server/actions/delete-shortened-url'
-import { useFormState } from 'react-dom'
 import { useForm } from '@conform-to/react'
 import { parseWithZod } from '@conform-to/zod'
 import { deleteShortenedURLSchema } from '@/server/actions/schemas/delete-shortened-url-schema'
@@ -43,7 +42,7 @@ function ShortenedURLActions({
         })
     }, [data])
 
-    const [lastResult, action] = useFormState(
+    const [lastResult, action] = useActionState(
         Action_DeleteShortenedURL,
         undefined,
     )
@@ -200,8 +199,8 @@ export default function Dashboard_ShortenedURL({ data }: ShortenedURLProps) {
                             wordBreak: 'break-all',
                             maxHeight: '1.5em',
                             overflow: 'hidden',
-                            '-webkit-line-clamp': '1',
-                            '-webkit-box-orient': 'vertical',
+                            WebkitLineClamp: '1',
+                            WebkitBoxOrient: 'vertical',
                         }}
                     >
                         {data.originalURL}

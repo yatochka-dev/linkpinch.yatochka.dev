@@ -1,21 +1,20 @@
 'use client'
-import React, { useEffect, useRef } from 'react'
+import React, { useActionState, useEffect, useRef } from 'react'
 import Box from '@mui/material/Box'
 import { parseWithZod } from '@conform-to/zod'
 import { useForm } from '@conform-to/react'
-import { useFormState } from 'react-dom'
 import Action_LogError from '@/server/actions/log-error'
 import { logErrorSchema } from '@/server/actions/schemas/log-error-schema'
 
-interface LogErrorProps {
-    error: Error & { digest?: string }
-}
+// interface LogErrorProps {
+//     error: Error & { digest?: string }
+// }
 
 export default function LogError({ error }: { error: Error }) {
     const formRef = useRef<HTMLFormElement>(null)
     const errorToJSON = JSON.stringify(error, Object.getOwnPropertyNames(error))
 
-    const [lastResult, dispatch] = useFormState(Action_LogError, undefined)
+    const [lastResult, dispatch] = useActionState(Action_LogError, undefined)
     const [form, fields] = useForm({
         // Sync the result of last submission
         lastResult,
